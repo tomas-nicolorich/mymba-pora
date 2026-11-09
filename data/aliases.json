@@ -1,4 +1,4 @@
 {
   "same_brand": [],
-  "ignore": []
+  "ignore": [{ "source": "cfk", "name": "Muji" }]
 }

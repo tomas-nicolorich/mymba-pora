@@ -74,6 +74,22 @@ test('a failed refresh keeps the previous cached year', async () => {
   assert.deepEqual(cache[1], old[1]);
 });
 
+test('a failed fetch with no previous value stays blank: nothing cached, no certified_since on the entry', async () => {
+  const lbRaw = read('lb-raw.json');
+  const id = lbRaw[0].BrandId;
+  const { impl } = fakeFetch({ [id]: { status: 503 } });
+  const cache = await refreshDetails({ ids: [id], cache: {}, fetchImpl: impl, delayMs: 0, warn: () => {} });
+  assert.ok(!(id in cache));
+  const { dataset } = buildDataset({
+    generatedAt: '2026-11-09T13:00:00Z',
+    cfk: { items: read('cfk-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
+    lb: { items: lbRaw, fetchedAt: '2026-11-09T12:30:00Z', sourceUrl: 'https://lb.example/api' },
+    lbDetails: cache,
+  });
+  const entry = dataset.brands.map((b) => b.sources.lb).find((e) => e?.brand_id === id);
+  assert.ok(entry && !('certified_since' in entry));
+});
+
 test('buildDataset puts certified_since and cached categories on the LB entry; blank when unknown', () => {
   const { dataset } = buildDataset({
     generatedAt: '2026-11-09T13:00:00Z',

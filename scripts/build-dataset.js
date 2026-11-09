@@ -33,13 +33,15 @@ function cfkEntry(item, { fetchedAt, sourceUrl }) {
 
 export const LB_DETAIL_URL = 'https://www.leapingbunny.org/ShopBrandDetail?BrandId=';
 
-function lbEntry(item, { fetchedAt, sourceUrl }) {
+function lbEntry(item, { fetchedAt, sourceUrl }, detail) {
   const entry = {
     brand_id: item.BrandId,
     trading_name: decodeEntities(item.TradingName),
     is_dirty_parent: item.IsDirtyParent === 'Yes',
   };
-  if (Array.isArray(item.categories) && item.categories.length) entry.categories = item.categories;
+  const categories = detail?.categories?.length ? detail.categories : item.categories;
+  if (Array.isArray(categories) && categories.length) entry.categories = categories;
+  if (detail?.year) entry.certified_since = detail.year;
   entry.link = `${LB_DETAIL_URL}${item.BrandId}`;
   entry.fetched_at = fetchedAt;
   entry.source_url = sourceUrl;
@@ -47,12 +49,12 @@ function lbEntry(item, { fetchedAt, sourceUrl }) {
 }
 
 // Attach Leaping Bunny entries by normalized TradingName only (never CompanyName).
-function mergeLeapingBunny(brands, lb, warnings) {
+function mergeLeapingBunny(brands, lb, warnings, details) {
   if (!lb?.items?.length) throw new Error('Leaping Bunny returned no brands');
   const byKey = new Map();
   for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
   for (const item of lb.items) {
-    const entry = lbEntry(item, lb);
+    const entry = lbEntry(item, lb, details[item.BrandId]);
     const key = normalizeName(entry.trading_name);
     const target = byKey.get(key);
     if (target && !target.sources.lb) {
@@ -66,7 +68,7 @@ function mergeLeapingBunny(brands, lb, warnings) {
   }
 }
 
-export function buildDataset({ generatedAt, cfk, lb }) {
+export function buildDataset({ generatedAt, cfk, lb, lbDetails = {} }) {
   if (!cfk?.items?.length) throw new Error('CFK returned no brands');
   const warnings = [];
   const brands = [];
@@ -90,7 +92,7 @@ export function buildDataset({ generatedAt, cfk, lb }) {
 
   const counts = { cfk: brands.length };
   if (lb) {
-    mergeLeapingBunny(brands, lb, warnings);
+    mergeLeapingBunny(brands, lb, warnings, lbDetails);
     counts.lb = lb.items.length;
   }
   const sortLink = (b) => b.sources.cfk?.link ?? b.sources.lb?.link ?? '';

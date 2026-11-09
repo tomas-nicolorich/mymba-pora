@@ -83,6 +83,7 @@ function showVerdictCard(brand) {
   if (lb) {
     detail.append(el('h3', { textContent: 'Leaping Bunny dice' }));
     detail.append(el('p', { textContent: 'Estado: Certificada' }));
+    if (lb.certified_since) detail.append(el('p', { textContent: `Certificada desde ${lb.certified_since}` }));
     if (lb.categories?.length) detail.append(el('p', { textContent: `Categoría: ${lb.categories.join(', ')}` }));
     detail.append(el('p', { class: 'dates' }, `Revisado por nosotros el ${fmtDate(lb.fetched_at)}`));
     detail.append(el('p', {}, el('a', { href: lb.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Leaping Bunny' })));

@@ -24,6 +24,8 @@ The site imports `../../src/...` and `../data/dataset.json` relative to `site/`,
 
 Main Source. `scripts/fetch-lb.js` loads the Brands page to get the session cookie and the anti-forgery form token, then calls `/api/Query` (`List of Brands`, 50 per request, 2 s apart, same client name) following `HasNext`/`NextOffset` (about 2,300 brands). Kept per brand: `BrandId`, `TradingName`, `IsDirtyParent`, `fetched_at`, source URL and the detail-page link; categories are not on list items, so they are omitted until a later ticket adds them (the card shows them when present). Entries match brands on the normalized `TradingName` only, never `CompanyName`. `npm run build-data` now fetches both Sources.
 
+Detail-page cache: "Certified since <year>" and "Products Sold" categories exist only on each brand's server-rendered detail page, so `scripts/lb-details.js` caches them in `data/lb-details.json` (BrandId to `year`, `categories`, `fetched_at`), committed to the repo. Each `build-data` run fetches new BrandIds plus the 100 oldest cache entries (one request every 2 s). A failed page is not cached (retried next run, previous value kept); a page with no year caches a blank year and warns. Neither fails the job. The entry gets `certified_since` and `categories`; the card shows "Certificada desde <year>".
+
 Verdict rule 1: any Leaping Bunny entry gives "Libre de crueldad · Certificada por Leaping Bunny", whatever CFK says. Notes: CFK says "No" adds the disagreement Note with CFK's entry date; `IsDirtyParent` adds the parent-company Note. Neither changes the Verdict.
 
 ## Verdict (rules 2-5 so far)

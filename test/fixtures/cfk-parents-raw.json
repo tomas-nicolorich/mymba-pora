@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "slug": "estee-lauder",
+    "name": "Est&#233;e Lauder",
+    "link": "https://www.crueltyfreekitty.com/cfk_parent_company/estee-lauder/",
+    "acf": { "cruelty_free": "No", "brand_website": "https://affiliate.example/?ref=cfk" }
+  },
+  {
+    "id": 865,
+    "slug": "pdc-wellness-personal-care",
+    "name": "PDC Wellness &amp; Personal Care",
+    "acf": { "cruelty_free": "Grey Area" }
+  },
+  { "id": 3, "slug": "loreal", "name": "L'Oréal", "acf": { "cruelty_free": "No" } },
+  { "id": 4, "slug": "yes-co", "name": "Yes Co", "acf": { "cruelty_free": "Yes" } },
+  { "id": 5, "slug": "no-status-inc", "name": "No Status Inc", "acf": false }
+]

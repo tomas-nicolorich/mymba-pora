@@ -32,7 +32,14 @@
       "suppliers_test_on_animals": "Uncertain",
       "third_party_animal_testing": "",
       "sold_in_mainland_china": "Uncertain",
-      "parent_company": [{ "name": "Est&#233;e Lauder", "term_id": 1 }, { "name": "PDC Wellness &amp; Personal Care" }],
+      "parent_company": [
+        { "name": "Est&#233;e Lauder", "term_id": 1, "slug": "estee-lauder", "taxonomy": "cfk_parent_company" },
+        { "name": "PDC Wellness &amp; Personal Care", "term_id": 865, "slug": "pdc-wellness-personal-care" },
+        { "name": "L&#8217;Or&#233;al", "term_id": 3, "slug": "loreal" },
+        { "name": "Yes Co", "slug": "yes-co" },
+        { "name": "No Status Inc", "term_id": 5, "slug": "no-status-inc" },
+        { "name": "Gone Corp", "term_id": 99, "slug": "gone-corp" }
+      ],
       "attributes": false,
       "certifications": null
     }

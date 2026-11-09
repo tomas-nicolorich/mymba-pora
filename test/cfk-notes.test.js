@@ -21,24 +21,48 @@ const cfk = (over = {}) => ({
 });
 const brand = (entry) => ({ name: 'X', key: 'x', sources: entry ? { cfk: entry } : {} });
 
+// A parent company as stored on the CFK Source entry: its name and CFK's own status for it.
+const P = (name, cruelty_free = 'No') => ({ name, cruelty_free });
 const PARENT_NOTE = (n) => `Su empresa matriz (${n}) testea en animales, según Cruelty-Free Kitty.`;
+const PARENT_GREY_NOTE = (n) => `Su empresa matriz (${n}) está en zona gris, según Cruelty-Free Kitty.`;
+const PARENT_NEUTRAL_NOTE = (n) => `Tiene una empresa matriz: ${n}.`;
 const CHINA_YES_NOTE =
   'Cruelty-Free Kitty indica que se vende en tiendas físicas de China continental. Es un punto discutido: si la marca está certificada por Leaping Bunny, esa certificación debería pesar más.';
 const CHINA_UNCERTAIN_NOTE = 'Cruelty-Free Kitty no pudo confirmar si se vende en China continental.';
 
-test('parent note: parent present and "doesn\'t test" attribute absent names the parent', () => {
-  const v = computeVerdict(brand(cfk({ parent_companies: ['Estée Lauder'] })));
+test('parent note: a parent CFK says tests on animals is named as testing', () => {
+  const v = computeVerdict(brand(cfk({ parent_companies: [P('Estée Lauder')] })));
   assert.deepEqual(v.notes, [PARENT_NOTE('Estée Lauder')]);
 });
 
-test('parent note: several parents are all named', () => {
-  const v = computeVerdict(brand(cfk({ parent_companies: ['A', 'B'] })));
+test('parent note: a grey area parent is named as grey area, not as testing', () => {
+  const v = computeVerdict(brand(cfk({ parent_companies: [P('PDC Wellness & Personal Care', 'Grey Area')] })));
+  assert.deepEqual(v.notes, [PARENT_GREY_NOTE('PDC Wellness & Personal Care')]);
+});
+
+test('parent note: a cruelty-free parent, or one without a known status, gets the neutral note', () => {
+  for (const status of ['Yes', '', null, undefined, 'Something new']) {
+    const v = computeVerdict(brand(cfk({ parent_companies: [{ name: 'A', cruelty_free: status }] })));
+    assert.deepEqual(v.notes, [PARENT_NEUTRAL_NOTE('A')], `status ${status}`);
+  }
+});
+
+test('parent note: several parents with the same status share one note', () => {
+  const v = computeVerdict(brand(cfk({ parent_companies: [P('A'), P('B')] })));
   assert.deepEqual(v.notes, [PARENT_NOTE('A y B')]);
 });
 
-test('parent note: absent when the "doesn\'t test" attribute is present', () => {
-  const v = computeVerdict(brand(cfk({ parent_companies: ['A'], parent_company_doesnt_test: true })));
-  assert.deepEqual(v.notes, []);
+test('parent note: mixed statuses give one note per status, testing first, then grey area, then neutral', () => {
+  const parents = [P('N1', ''), P('G', 'Grey Area'), P('T1'), P('Y', 'Yes'), P('T2')];
+  const v = computeVerdict(brand(cfk({ parent_companies: parents })));
+  assert.deepEqual(v.notes, [PARENT_NOTE('T1 y T2'), PARENT_GREY_NOTE('G'), PARENT_NEUTRAL_NOTE('N1 y Y')]);
+});
+
+test('parent note: absent when the "doesn\'t test" attribute is present, whatever the parent status', () => {
+  for (const status of ['No', 'Grey Area', 'Yes', '']) {
+    const v = computeVerdict(brand(cfk({ parent_companies: [P('A', status)], parent_company_doesnt_test: true })));
+    assert.deepEqual(v.notes, []);
+  }
 });
 
 test('parent note: absent when there is no parent', () => {
@@ -62,7 +86,7 @@ test('China: No, empty or missing show nothing', () => {
 });
 
 test('parent and China notes come together, parent first', () => {
-  const v = computeVerdict(brand(cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+  const v = computeVerdict(brand(cfk({ parent_companies: [P('A')], sold_in_mainland_china: 'Yes' })));
   assert.deepEqual(v.notes, [PARENT_NOTE('A'), CHINA_YES_NOTE]);
 });
 
@@ -74,7 +98,7 @@ for (const [rule, cruelty_free, verdict] of [
 ]) {
   test(`CFK notes never change the Verdict (rule ${rule})`, () => {
     const plain = computeVerdict(brand(cfk({ cruelty_free })));
-    const noisy = computeVerdict(brand(cfk({ cruelty_free, parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+    const noisy = computeVerdict(brand(cfk({ cruelty_free, parent_companies: [P('A')], sold_in_mainland_china: 'Yes' })));
     const uncertain = computeVerdict(brand(cfk({ cruelty_free, sold_in_mainland_china: 'Uncertain' })));
     for (const v of [noisy, uncertain]) {
       assert.equal(v.verdict, verdict);
@@ -91,15 +115,15 @@ const cfiEntry = { name: 'X', link: 'https://cfi.example/x/', date: '2026-11-04T
 const certified = (entry) => ({ name: 'X', key: 'x', sources: { lb: lbEntry, cfi: cfiEntry, cfk: entry } });
 
 test('rule 1: parent and China notes appear on a certified brand', () => {
-  const v = computeVerdict(certified(cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+  const v = computeVerdict(certified(cfk({ parent_companies: [P('A')], sold_in_mainland_china: 'Yes' })));
   assert.deepEqual(v.notes, [PARENT_NOTE('A'), CHINA_YES_NOTE]);
   assert.deepEqual(computeVerdict(certified(cfk({ sold_in_mainland_china: 'Uncertain' }))).notes, [CHINA_UNCERTAIN_NOTE]);
-  assert.deepEqual(computeVerdict(certified(cfk({ parent_companies: ['A'], parent_company_doesnt_test: true }))).notes, []);
+  assert.deepEqual(computeVerdict(certified(cfk({ parent_companies: [P('A')], parent_company_doesnt_test: true }))).notes, []);
 });
 
 test('CFK notes never change the Verdict (rule 1)', () => {
   const plain = computeVerdict(certified(cfk()));
-  const noisy = computeVerdict(certified(cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+  const noisy = computeVerdict(certified(cfk({ parent_companies: [P('A')], sold_in_mainland_china: 'Yes' })));
   assert.equal(noisy.verdict, 'certified');
   assert.equal(noisy.label, plain.label);
   assert.equal(noisy.notes.length, 2);

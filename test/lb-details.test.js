@@ -82,7 +82,7 @@ test('a failed fetch with no previous value stays blank: nothing cached, no cert
   assert.ok(!(id in cache));
   const { dataset } = buildDataset({
     generatedAt: '2026-11-09T13:00:00Z',
-    cfk: { items: read('cfk-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
+    cfk: { items: read('cfk-raw.json'), parents: read('cfk-parents-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
     lb: { items: lbRaw, fetchedAt: '2026-11-09T12:30:00Z', sourceUrl: 'https://lb.example/api' },
     lbDetails: cache,
   });
@@ -93,7 +93,7 @@ test('a failed fetch with no previous value stays blank: nothing cached, no cert
 test('buildDataset puts certified_since and cached categories on the LB entry; blank when unknown', () => {
   const { dataset } = buildDataset({
     generatedAt: '2026-11-09T13:00:00Z',
-    cfk: { items: read('cfk-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
+    cfk: { items: read('cfk-raw.json'), parents: read('cfk-parents-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
     lb: { items: read('lb-raw.json'), fetchedAt: '2026-11-09T12:30:00Z', sourceUrl: 'https://lb.example/api' },
     lbDetails: { 1719: { year: 2019, categories: ['FACE CARE'], fetched_at: '2026-11-09T00:00:00Z' } },
   });

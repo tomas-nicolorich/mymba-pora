@@ -8,7 +8,7 @@ const read = (f) => JSON.parse(readFileSync(new URL(`./fixtures/${f}`, import.me
 const LB_URL = 'https://www.leapingbunny.org/api/Query';
 const input = {
   generatedAt: '2026-11-09T13:00:00Z',
-  cfk: { items: read('cfk-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
+  cfk: { items: read('cfk-raw.json'), parents: read('cfk-parents-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
   lb: { items: read('lb-raw.json'), fetchedAt: '2026-11-09T12:30:00Z', sourceUrl: LB_URL },
 };
 const byName = (dataset, n) => dataset.brands.find((b) => b.name === n);
@@ -44,8 +44,9 @@ test('merged brands feed the Verdict', () => {
   const { dataset } = buildDataset(input);
   const fm = computeVerdict(byName(dataset, 'Frederic Malle'));
   assert.equal(fm.verdict, 'certified');
-  // CFK disagreement, CFK parent, CFK China Uncertain, only in the Leaping Bunny directory
-  assert.equal(fm.notes.length, 4);
+  // CFK disagreement, three CFK parent Notes (testing, grey area, neutral), CFK China Uncertain,
+  // only in the Leaping Bunny directory
+  assert.equal(fm.notes.length, 6);
   const ag = computeVerdict(byName(dataset, 'Australian Glow'));
   assert.equal(ag.verdict, 'certified');
   assert.deepEqual(ag.notes, [

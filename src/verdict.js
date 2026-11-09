@@ -62,12 +62,26 @@ function spanishDate(iso) {
   return m ? `${Number(m[3])} de ${MONTHS[Number(m[2]) - 1]} de ${m[1]}` : null;
 }
 
-function cfkNotes(cfk) {
-  const notes = [];
+// Parent company Notes, worded by what CFK says about each parent. Parents sharing a wording share one
+// Note, in this order. A parent CFK calls cruelty-free, or gives no status, only gets the neutral wording:
+// we never say a parent tests on animals without CFK saying so.
+const PARENT_NOTES = [
+  { status: 'No', note: (names) => `Su empresa matriz (${names}) testea en animales, según Cruelty-Free Kitty.` },
+  { status: 'Grey Area', note: (names) => `Su empresa matriz (${names}) está en zona gris, según Cruelty-Free Kitty.` },
+  { status: null, note: (names) => `Tiene una empresa matriz: ${names}.` },
+];
+
+function parentNotes(cfk) {
   const parents = Array.isArray(cfk.parent_companies) ? cfk.parent_companies : [];
-  if (parents.length && !cfk.parent_company_doesnt_test) {
-    notes.push(`Su empresa matriz (${joinSpanish(parents)}) testea en animales, según Cruelty-Free Kitty.`);
-  }
+  if (cfk.parent_company_doesnt_test) return [];
+  const groupOf = (p) => PARENT_NOTES.find((g) => g.status === p?.cruelty_free) ?? PARENT_NOTES.at(-1);
+  return PARENT_NOTES.map((g) => parents.filter((p) => groupOf(p) === g).map((p) => p.name))
+    .map((names, i) => (names.length ? PARENT_NOTES[i].note(joinSpanish(names)) : null))
+    .filter(Boolean);
+}
+
+function cfkNotes(cfk) {
+  const notes = parentNotes(cfk);
   const china = String(cfk.sold_in_mainland_china ?? '');
   if (china.startsWith('Yes')) {
     notes.push(

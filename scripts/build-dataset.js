@@ -16,7 +16,35 @@ const PARENT_OK_ATTRIBUTE = "Parent company doesn't test on animals";
 const names = (value) =>
   Array.isArray(value) ? value.map((t) => decodeEntities(typeof t === 'string' ? t : t?.name)).filter(Boolean) : [];
 
-function cfkEntry(item, { fetchedAt, sourceUrl }) {
+// CFK's own status for each parent company, looked up by taxonomy term id, then slug (never by name,
+// whose spelling can differ between a brand's field and the collection). Built from the raw
+// `cfk_parent_company` collection; each item is { id, slug, name, acf: { cruelty_free } | false }.
+function parentStatusLookup(parents) {
+  const byId = new Map();
+  const bySlug = new Map();
+  for (const p of parents) {
+    const status = typeof p?.acf?.cruelty_free === 'string' ? p.acf.cruelty_free : '';
+    if (p?.id != null) byId.set(p.id, status);
+    if (p?.slug) bySlug.set(p.slug, status);
+  }
+  // Returns the status ('' when CFK gives none), or undefined when the parent isn't in the collection.
+  return (term) => (byId.has(term?.term_id) ? byId.get(term.term_id) : bySlug.get(term?.slug));
+}
+
+function cfkParents(value, statusOf, missing) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((term) => {
+      const name = decodeEntities(typeof term === 'string' ? term : term?.name);
+      if (!name) return null;
+      const status = statusOf(term);
+      if (status === undefined) missing.add(name);
+      return { name, cruelty_free: status ?? '' };
+    })
+    .filter(Boolean);
+}
+
+function cfkEntry(item, { fetchedAt, sourceUrl }, statusOf, missingParents) {
   const acf = item.acf ?? {};
   const entry = {
     name: decodeEntities(item.title?.rendered),
@@ -25,7 +53,7 @@ function cfkEntry(item, { fetchedAt, sourceUrl }) {
     cruelty_free: acf.cruelty_free ?? '',
   };
   for (const key of FLAG_KEYS) entry[key] = acf[key] ?? '';
-  entry.parent_companies = names(acf.parent_company);
+  entry.parent_companies = cfkParents(acf.parent_company, statusOf, missingParents);
   entry.parent_company_doesnt_test = names(acf.attributes).includes(PARENT_OK_ATTRIBUTE);
   entry.certifications = names(acf.certifications);
   entry.fetched_at = fetchedAt;
@@ -137,13 +165,16 @@ function applyAliases(brands, aliases, warnings) {
 
 export function buildDataset({ generatedAt, cfk, lb, cfi, lbDetails = {}, aliases }) {
   if (!cfk?.items?.length) throw new Error(`${SOURCE_LABELS.cfk} returned no brands`);
+  if (!cfk.parents?.length) throw new Error(`${SOURCE_LABELS.cfk} returned no parent companies`);
   const warnings = [];
   const brands = [];
   const seen = new Map();
   const unknownStatuses = new Set();
+  const statusOf = parentStatusLookup(cfk.parents);
+  const missingParents = new Set();
 
   for (const item of cfk.items) {
-    const entry = cfkEntry(item, cfk);
+    const entry = cfkEntry(item, cfk, statusOf, missingParents);
     const key = normalizeName(entry.name);
     if (!KNOWN_STATUSES.has(entry.cruelty_free)) unknownStatuses.add(entry.cruelty_free);
     if (seen.has(key)) {
@@ -155,6 +186,12 @@ export function buildDataset({ generatedAt, cfk, lb, cfi, lbDetails = {}, aliase
   }
   if (unknownStatuses.size) {
     warnings.push(`${SOURCE_LABELS.cfk} has unknown cruelty_free values: ${[...unknownStatuses].map((s) => JSON.stringify(s)).join(', ')}`);
+  }
+
+  if (missingParents.size) {
+    warnings.push(
+      `${SOURCE_LABELS.cfk} parent companies not in its parent company list (shown without a status): ${[...missingParents].map((n) => JSON.stringify(n)).join(', ')}`,
+    );
   }
 
   const counts = { cfk: brands.length };

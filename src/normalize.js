@@ -12,9 +12,15 @@ function decodeOnce(s) {
   });
 }
 
-// CFK/CFI sometimes double-encode (&amp;#8217;), so decode twice.
+// CFK/CFI sometimes multiply-encode (&amp;#8217;, &amp;amp;#038;), so decode until stable.
 export function decodeEntities(text) {
-  return decodeOnce(decodeOnce(String(text ?? '')));
+  let s = String(text ?? '');
+  for (let i = 0; i < 5; i++) {
+    const next = decodeOnce(s);
+    if (next === s) break;
+    s = next;
+  }
+  return s;
 }
 
 export function normalizeName(name) {

@@ -1,6 +1,7 @@
 import Fuse from '../vendor/fuse.min.mjs';
 import { normalizeName } from '../../src/normalize.js';
 import { computeVerdict, describeFlags } from '../../src/verdict.js';
+import { suggestionLabels } from '../../src/labels.js';
 
 const $ = (id) => document.getElementById(id);
 const input = $('q');
@@ -41,8 +42,9 @@ function renderSuggestions() {
     input.setAttribute('aria-expanded', 'false');
     return;
   }
+  const labels = suggestionLabels(matches);
   matches.forEach((b, i) => {
-    const li = el('li', { role: 'option', id: `opt-${i}`, textContent: b.name });
+    const li = el('li', { role: 'option', id: `opt-${i}`, textContent: labels[i] });
     li.setAttribute('aria-selected', String(i === active));
     li.addEventListener('mousedown', (e) => { e.preventDefault(); choose(b); });
     list.append(li);

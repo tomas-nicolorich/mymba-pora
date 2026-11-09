@@ -79,7 +79,7 @@ function showVerdictCard(brand) {
   if (v.message) detail.append(el('p', { textContent: v.message }));
   if (v.questions) detail.append(el('ul', {}, ...v.questions.map((q) => el('li', { textContent: q }))));
   if (v.greyAreaReason) detail.append(el('p', { textContent: v.greyAreaReason }));
-  for (const note of v.notes ?? []) detail.append(el('p', { class: 'note', textContent: note }));
+  if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
 
   const lb = brand.sources?.lb;
   if (lb) {
@@ -100,8 +100,6 @@ function showVerdictCard(brand) {
       `Revisado por nosotros el ${fmtDate(cfi.fetched_at)}`));
     detail.append(el('p', {}, el('a', { href: cfi.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Cruelty Free International' })));
   }
-
-  if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
 
   const cfk = brand.sources?.cfk;
   if (cfk) {

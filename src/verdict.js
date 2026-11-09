@@ -77,18 +77,29 @@ function cfkNotes(cfk) {
   return notes;
 }
 
+const ONLY_LB_NOTE = 'Solo figura en el directorio de Leaping Bunny, no en el de Cruelty Free International.';
+const ONLY_CFI_NOTE = 'Solo figura en el directorio de Cruelty Free International, no en el de Leaping Bunny.';
+const CFK_TAG_NOTE =
+  'Cruelty-Free Kitty la etiqueta como certificada por Leaping Bunny, pero no figura en ninguno de los dos directorios (Leaping Bunny y Cruelty Free International).';
+
+const hasLeapingBunnyTag = (cfk) => Array.isArray(cfk?.certifications) && cfk.certifications.includes('Leaping Bunny');
+
 export function computeVerdict(brand) {
   const cfk = brand?.sources?.cfk;
   const lb = brand?.sources?.lb;
-  // Rule 1: Leaping Bunny certified, whatever CFK says. (CFI is not collected yet.)
-  if (lb) {
+  const cfi = brand?.sources?.cfi;
+  // Rule 1: listed in Leaping Bunny or Cruelty Free International, whatever CFK says.
+  if (lb || cfi) {
     const notes = [];
     if (cfk?.cruelty_free === 'No') {
       notes.push(
         `Cruelty-Free Kitty la marca como no libre de crueldad (ficha del ${spanishDate(cfk.modified)}), pero Leaping Bunny la certifica.`,
       );
     }
-    if (lb.is_dirty_parent) notes.push('Su empresa matriz no está certificada por Leaping Bunny.');
+    if (lb?.is_dirty_parent) notes.push('Su empresa matriz no está certificada por Leaping Bunny.');
+    if (cfk) notes.push(...cfkNotes(cfk));
+    if (!cfi) notes.push(ONLY_LB_NOTE);
+    else if (!lb) notes.push(ONLY_CFI_NOTE);
     return { verdict: 'certified', label: 'Libre de crueldad · Certificada por Leaping Bunny', notes };
   }
   if (!cfk) {
@@ -102,6 +113,7 @@ export function computeVerdict(brand) {
   }
   const status = cfk.cruelty_free;
   const notes = cfkNotes(cfk);
+  if (hasLeapingBunnyTag(cfk)) notes.push(CFK_TAG_NOTE);
   if (status === 'Yes') {
     return {
       verdict: 'verified',

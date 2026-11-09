@@ -28,10 +28,12 @@ const lb = (over = {}) => ({
   source_url: 'https://www.leapingbunny.org/api/Query',
   ...over,
 });
+// Listed in both directories, so the single-directory Note (see verdict-cfi.test.js) stays out of these cases.
+const cfi = { name: 'X', link: 'https://www.crueltyfreeinternational.org/approved-brands/listing/x/', date: '2026-11-04T09:30:16' };
 const brand = (lbEntry, cfkEntry) => ({
   name: 'X',
   key: 'x',
-  sources: { ...(lbEntry && { lb: lbEntry }), ...(cfkEntry && { cfk: cfkEntry }) },
+  sources: { ...(lbEntry && { lb: lbEntry, cfi }), ...(cfkEntry && { cfk: cfkEntry }) },
 });
 const CERTIFIED = 'Libre de crueldad · Certificada por Leaping Bunny';
 const DIRTY = 'Su empresa matriz no está certificada por Leaping Bunny.';

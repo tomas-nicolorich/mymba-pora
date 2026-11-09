@@ -44,10 +44,13 @@ test('merged brands feed the Verdict', () => {
   const { dataset } = buildDataset(input);
   const fm = computeVerdict(byName(dataset, 'Frederic Malle'));
   assert.equal(fm.verdict, 'certified');
-  assert.equal(fm.notes.length, 1); // CFK disagreement
+  assert.equal(fm.notes.length, 2); // CFK disagreement + only in the Leaping Bunny directory
   const ag = computeVerdict(byName(dataset, 'Australian Glow'));
   assert.equal(ag.verdict, 'certified');
-  assert.deepEqual(ag.notes, ['Su empresa matriz no está certificada por Leaping Bunny.']);
+  assert.deepEqual(ag.notes, [
+    'Su empresa matriz no está certificada por Leaping Bunny.',
+    'Solo figura en el directorio de Leaping Bunny, no en el de Cruelty Free International.',
+  ]);
 });
 
 test('an empty LB response is a validation error', () => {

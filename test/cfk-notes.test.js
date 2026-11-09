@@ -66,7 +66,7 @@ test('parent and China notes come together, parent first', () => {
   assert.deepEqual(v.notes, [PARENT_NOTE('A'), CHINA_YES_NOTE]);
 });
 
-// To cover rule 1 once Leaping Bunny entries exist, add a case here with a certified input.
+// Rule 1 (Leaping Bunny certified) is covered below and in verdict-cfi.test.js.
 for (const [rule, cruelty_free, verdict] of [
   [2, 'Yes', 'verified'],
   [3, 'No', 'not_cruelty_free'],
@@ -84,6 +84,26 @@ for (const [rule, cruelty_free, verdict] of [
     assert.equal(noisy.notes.length, 2);
   });
 }
+
+// Rule 1: a Leaping Bunny certified brand also gets the CFK parent and China Notes.
+const lbEntry = { brand_id: 1, trading_name: 'X', is_dirty_parent: false, link: 'https://lb.example/1' };
+const cfiEntry = { name: 'X', link: 'https://cfi.example/x/', date: '2026-11-04T09:30:16' };
+const certified = (entry) => ({ name: 'X', key: 'x', sources: { lb: lbEntry, cfi: cfiEntry, cfk: entry } });
+
+test('rule 1: parent and China notes appear on a certified brand', () => {
+  const v = computeVerdict(certified(cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+  assert.deepEqual(v.notes, [PARENT_NOTE('A'), CHINA_YES_NOTE]);
+  assert.deepEqual(computeVerdict(certified(cfk({ sold_in_mainland_china: 'Uncertain' }))).notes, [CHINA_UNCERTAIN_NOTE]);
+  assert.deepEqual(computeVerdict(certified(cfk({ parent_companies: ['A'], parent_company_doesnt_test: true }))).notes, []);
+});
+
+test('CFK notes never change the Verdict (rule 1)', () => {
+  const plain = computeVerdict(certified(cfk()));
+  const noisy = computeVerdict(certified(cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' })));
+  assert.equal(noisy.verdict, 'certified');
+  assert.equal(noisy.label, plain.label);
+  assert.equal(noisy.notes.length, 2);
+});
 
 test('rule 5: an unknown brand has no notes', () => {
   assert.deepEqual(computeVerdict(brand(null)).notes, []);

@@ -1,9 +1,10 @@
 // The data job with safety rails: fetch every Source, validate, and only then hand the result to `write`.
 // Any problem throws, so the caller exits non-zero and nothing (dataset or cache) is written.
-import { SOURCE_LABELS } from '../src/labels.js';
+import { SOURCES, SOURCE_LABELS } from '../src/labels.js';
 import { buildDataset } from './build-dataset.js';
 
-export const FIRST_RUN_MINIMUMS = { cfk: 1300, lb: 2000, cfi: 350 };
+const FIRST_RUN_MINIMUM_COUNTS = { cfk: 1300, lb: 2000, cfi: 350 };
+export const FIRST_RUN_MINIMUMS = Object.fromEntries(SOURCES.map((s) => [s.key, FIRST_RUN_MINIMUM_COUNTS[s.key]]));
 export const MIN_RATIO = { num: 9, den: 10 };
 
 // `previous` is the previous dataset's counts (or null). A Source missing from it is a first run for that Source.
@@ -26,7 +27,7 @@ export function checkCounts(counts, previous, minimums = FIRST_RUN_MINIMUMS) {
 
 export async function runJob({ fetchers, loadPrevious, loadAliases, refreshDetails, write, log, minimums = FIRST_RUN_MINIMUMS }) {
   const raw = {};
-  for (const source of ['cfk', 'lb', 'cfi']) {
+  for (const { key: source } of SOURCES) {
     try {
       raw[source] = await fetchers[source]();
     } catch (err) {

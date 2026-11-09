@@ -1,6 +1,7 @@
 // Dataset build: pure function from raw Source responses to a dataset (or a thrown validation error).
 import { decodeEntities, normalizeName } from '../src/normalize.js';
-import { SOURCE_LABELS } from '../src/labels.js';
+import { SOURCES, SOURCE_LABELS } from '../src/labels.js';
+import { LB_DETAIL_URL } from './fetch-lb.js';
 
 const KNOWN_STATUSES = new Set(['Yes', 'No', 'Grey Area']);
 const FLAG_KEYS = [
@@ -32,8 +33,6 @@ function cfkEntry(item, { fetchedAt, sourceUrl }) {
   return entry;
 }
 
-export const LB_DETAIL_URL = 'https://www.leapingbunny.org/ShopBrandDetail?BrandId=';
-
 function lbEntry(item, { fetchedAt, sourceUrl }, detail) {
   const tradingName = decodeEntities(item.TradingName);
   const entry = {
@@ -52,22 +51,24 @@ function lbEntry(item, { fetchedAt, sourceUrl }, detail) {
   return entry;
 }
 
-// Attach Leaping Bunny entries by normalized display name (CompanyName, falling back to TradingName), never the legal TradingName.
-function mergeLeapingBunny(brands, lb, warnings, details) {
-  if (!lb?.items?.length) throw new Error('Leaping Bunny returned no brands');
+// Attach one Source's entries to `brands` by normalized entry name (for Leaping Bunny that is the display name,
+// never the legal TradingName). `raw` is the fetched { items, fetchedAt, sourceUrl }; `toEntry(item, raw)` builds an entry.
+// An entry whose key is already held by a brand with an entry from the same Source becomes a separate brand and warns.
+function mergeSource(brands, key, raw, toEntry, warnings) {
+  if (!raw?.items?.length) throw new Error(`${SOURCE_LABELS[key]} returned no brands`);
   const byKey = new Map();
   for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
-  for (const item of lb.items) {
-    const entry = lbEntry(item, lb, details[item.BrandId]);
-    const key = normalizeName(entry.name);
-    const target = byKey.get(key);
-    if (target && !target.sources.lb) {
-      target.sources.lb = entry;
+  for (const item of raw.items) {
+    const entry = toEntry(item, raw);
+    const nameKey = normalizeName(entry.name);
+    const target = byKey.get(nameKey);
+    if (target && !target.sources[key]) {
+      target.sources[key] = entry;
     } else {
-      if (target) warnings.push(`${SOURCE_LABELS.lb} collision after normalization: "${entry.name}" (key "${key}")`);
-      const brand = { name: entry.name, key, sources: { lb: entry } };
+      if (target) warnings.push(`${SOURCE_LABELS[key]} collision after normalization: "${entry.name}" (key "${nameKey}")`);
+      const brand = { name: entry.name, key: nameKey, sources: { [key]: entry } };
       brands.push(brand);
-      if (!byKey.has(key)) byKey.set(key, brand);
+      if (!byKey.has(nameKey)) byKey.set(nameKey, brand);
     }
   }
 }
@@ -80,26 +81,6 @@ function cfiEntry(item, { fetchedAt, sourceUrl }) {
     fetched_at: fetchedAt,
     source_url: sourceUrl,
   };
-}
-
-// Attach Cruelty Free International entries by normalized name (it has no categories).
-function mergeCfi(brands, cfi, warnings) {
-  if (!cfi?.items?.length) throw new Error('Cruelty Free International returned no brands');
-  const byKey = new Map();
-  for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
-  for (const item of cfi.items) {
-    const entry = cfiEntry(item, cfi);
-    const key = normalizeName(entry.name);
-    const target = byKey.get(key);
-    if (target && !target.sources.cfi) {
-      target.sources.cfi = entry;
-    } else {
-      if (target) warnings.push(`${SOURCE_LABELS.cfi} collision after normalization: "${entry.name}" (key "${key}")`);
-      const brand = { name: entry.name, key, sources: { cfi: entry } };
-      brands.push(brand);
-      if (!byKey.has(key)) byKey.set(key, brand);
-    }
-  }
 }
 
 // Generic over Sources: every Source entry has its display name in `name` (cfk, cfi, lb; `trading_name` only as a legacy fallback).
@@ -155,7 +136,7 @@ function applyAliases(brands, aliases, warnings) {
 }
 
 export function buildDataset({ generatedAt, cfk, lb, cfi, lbDetails = {}, aliases }) {
-  if (!cfk?.items?.length) throw new Error('CFK returned no brands');
+  if (!cfk?.items?.length) throw new Error(`${SOURCE_LABELS.cfk} returned no brands`);
   const warnings = [];
   const brands = [];
   const seen = new Map();
@@ -173,20 +154,20 @@ export function buildDataset({ generatedAt, cfk, lb, cfi, lbDetails = {}, aliase
     brands.push({ name: entry.name, key, sources: { cfk: entry } });
   }
   if (unknownStatuses.size) {
-    warnings.push(`CFK has unknown cruelty_free values: ${[...unknownStatuses].map((s) => JSON.stringify(s)).join(', ')}`);
+    warnings.push(`${SOURCE_LABELS.cfk} has unknown cruelty_free values: ${[...unknownStatuses].map((s) => JSON.stringify(s)).join(', ')}`);
   }
 
   const counts = { cfk: brands.length };
   if (lb) {
-    mergeLeapingBunny(brands, lb, warnings, lbDetails);
+    mergeSource(brands, 'lb', lb, (item, raw) => lbEntry(item, raw, lbDetails[item.BrandId]), warnings);
     counts.lb = lb.items.length;
   }
   if (cfi) {
-    mergeCfi(brands, cfi, warnings);
+    mergeSource(brands, 'cfi', cfi, cfiEntry, warnings);
     counts.cfi = cfi.items.length;
   }
   applyAliases(brands, aliases, warnings);
-  const sortLink = (b) => b.sources.cfk?.link ?? b.sources.lb?.link ?? b.sources.cfi?.link ?? '';
+  const sortLink = (b) => SOURCES.map((s) => b.sources[s.key]?.link).find(Boolean) ?? '';
   brands.sort((a, b) => a.key.localeCompare(b.key) || sortLink(a).localeCompare(sortLink(b)));
   return { dataset: { generated_at: generatedAt, counts, brands }, warnings };
 }

@@ -84,7 +84,7 @@ test('same-named CFK entries stay separate brands and warn about the collision',
 });
 
 test('an empty CFK response is a validation error', () => {
-  assert.throws(() => buildDataset({ ...input, cfk: { ...input.cfk, items: [] } }), /CFK/);
+  assert.throws(() => buildDataset({ ...input, cfk: { ...input.cfk, items: [] } }), /Cruelty-Free Kitty returned no brands/);
 });
 
 test('dataset brands feed the Verdict directly', () => {

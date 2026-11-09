@@ -1,7 +1,15 @@
-// Shared by the browser suggestions list. When several suggestions share a key (same-Source
-// collisions, kept as separate brands), each is labeled with its Source so they can be told apart.
+// Shared by Node (scripts, tests) and the browser: no Node APIs. Defines the Sources once and the
+// suggestions-list labels. When several suggestions share a key (same-Source collisions, kept as
+// separate brands), each is labeled with its Source so they can be told apart.
 
-export const SOURCE_LABELS = { cfk: 'Cruelty-Free Kitty', lb: 'Leaping Bunny', cfi: 'Cruelty Free International' };
+// Every Source, in fetch order, with its display label. Add a Source here first.
+export const SOURCES = [
+  { key: 'cfk', label: 'Cruelty-Free Kitty' },
+  { key: 'lb', label: 'Leaping Bunny' },
+  { key: 'cfi', label: 'Cruelty Free International' },
+];
+
+export const SOURCE_LABELS = Object.fromEntries(SOURCES.map((s) => [s.key, s.label]));
 
 export function suggestionLabels(brands) {
   const counts = new Map();

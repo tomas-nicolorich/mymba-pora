@@ -1,12 +1,11 @@
 // Network layer for Leaping Bunny (iMIS): same flow as its Brands page. Polite, sequential, paginated.
+import { USER_AGENT, DELAY_MS, sleep } from './http.js';
+
 export const LB_PAGE = 'https://www.leapingbunny.org/Web/Shopping-Guide/Brands.aspx';
 export const LB_ENDPOINT = 'https://www.leapingbunny.org/api/Query';
 export const LB_QUERY = '$/_LeapingBunny/Shopping Guide/List of Brands';
-export const USER_AGENT = 'mymba-pora-bot/0.1';
-export const DELAY_MS = 2000;
+export const LB_DETAIL_URL = 'https://www.leapingbunny.org/ShopBrandDetail?BrandId=';
 const PAGE_SIZE = 50; // what the site's own page uses
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export function parseFormToken(html) {
   const m = /id="__RequestVerificationToken"\s+value="([^"]*)"/.exec(html);

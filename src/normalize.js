@@ -26,7 +26,7 @@ export function decodeEntities(text) {
 export function normalizeName(name) {
   return decodeEntities(name)
     .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u{300}-\u{36f}]/gu, '') // combining diacritical marks
     .toLowerCase()
     .replace(/&/g, ' and ')
     .replace(/^\s*the\s+/, '')

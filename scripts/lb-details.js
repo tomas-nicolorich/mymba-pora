@@ -2,13 +2,11 @@
 // in data/lb-details.json (BrandId -> { year, categories, fetched_at }) and refreshed a little on every run.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { decodeEntities } from '../src/normalize.js';
-import { LB_DETAIL_URL } from './build-dataset.js';
-import { USER_AGENT, DELAY_MS } from './fetch-lb.js';
+import { LB_DETAIL_URL } from './fetch-lb.js';
+import { USER_AGENT, DELAY_MS, sleep } from './http.js';
 
 export const REFRESH_OLDEST = 100;
 export const CACHE_URL = new URL('../data/lb-details.json', import.meta.url);
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // A missing brand returns HTTP 200 without the brand block, so "no year" is detected by absence.
 export function parseDetail(html) {

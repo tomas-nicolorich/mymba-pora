@@ -31,7 +31,42 @@ function cfkEntry(item, { fetchedAt, sourceUrl }) {
   return entry;
 }
 
-export function buildDataset({ generatedAt, cfk }) {
+export const LB_DETAIL_URL = 'https://www.leapingbunny.org/ShopBrandDetail?BrandId=';
+
+function lbEntry(item, { fetchedAt, sourceUrl }) {
+  const entry = {
+    brand_id: item.BrandId,
+    trading_name: decodeEntities(item.TradingName),
+    is_dirty_parent: item.IsDirtyParent === 'Yes',
+  };
+  if (Array.isArray(item.categories) && item.categories.length) entry.categories = item.categories;
+  entry.link = `${LB_DETAIL_URL}${item.BrandId}`;
+  entry.fetched_at = fetchedAt;
+  entry.source_url = sourceUrl;
+  return entry;
+}
+
+// Attach Leaping Bunny entries by normalized TradingName only (never CompanyName).
+function mergeLeapingBunny(brands, lb, warnings) {
+  if (!lb?.items?.length) throw new Error('Leaping Bunny returned no brands');
+  const byKey = new Map();
+  for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
+  for (const item of lb.items) {
+    const entry = lbEntry(item, lb);
+    const key = normalizeName(entry.trading_name);
+    const target = byKey.get(key);
+    if (target && !target.sources.lb) {
+      target.sources.lb = entry;
+    } else {
+      if (target) warnings.push(`Leaping Bunny collision after normalization: "${entry.trading_name}" (key "${key}")`);
+      const brand = { name: entry.trading_name, key, sources: { lb: entry } };
+      brands.push(brand);
+      if (!byKey.has(key)) byKey.set(key, brand);
+    }
+  }
+}
+
+export function buildDataset({ generatedAt, cfk, lb }) {
   if (!cfk?.items?.length) throw new Error('CFK returned no brands');
   const warnings = [];
   const brands = [];
@@ -53,6 +88,12 @@ export function buildDataset({ generatedAt, cfk }) {
     warnings.push(`CFK has unknown cruelty_free values: ${[...unknownStatuses].map((s) => JSON.stringify(s)).join(', ')}`);
   }
 
-  brands.sort((a, b) => a.key.localeCompare(b.key) || a.sources.cfk.link.localeCompare(b.sources.cfk.link));
-  return { dataset: { generated_at: generatedAt, counts: { cfk: brands.length }, brands }, warnings };
+  const counts = { cfk: brands.length };
+  if (lb) {
+    mergeLeapingBunny(brands, lb, warnings);
+    counts.lb = lb.items.length;
+  }
+  const sortLink = (b) => b.sources.cfk?.link ?? b.sources.lb?.link ?? '';
+  brands.sort((a, b) => a.key.localeCompare(b.key) || sortLink(a).localeCompare(sortLink(b)));
+  return { dataset: { generated_at: generatedAt, counts, brands }, warnings };
 }

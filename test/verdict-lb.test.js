@@ -57,7 +57,14 @@ test('rule 1: certified + CFK not cruelty-free -> Certified plus disagreement No
   assert.equal(v.verdict, 'certified');
   assert.equal(v.label, CERTIFIED);
   assert.deepEqual(v.notes, [
-    'Cruelty-Free Kitty la marca como no libre de crueldad (ficha del 31 de marzo de 2026), pero Leaping Bunny la certifica.',
+    'Cruelty-Free Kitty la lista como no libre de crueldad (ficha del 31 de marzo de 2026). La certificación de Leaping Bunny es auditada, así que la ficha de CFK puede estar desactualizada.',
+  ]);
+});
+
+test('disagreement Note drops the "(ficha del ...)" part when CFK has no date', () => {
+  const v = computeVerdict(brand(lb(), cfk({ cruelty_free: 'No', modified: undefined })));
+  assert.deepEqual(v.notes, [
+    'Cruelty-Free Kitty la lista como no libre de crueldad. La certificación de Leaping Bunny es auditada, así que la ficha de CFK puede estar desactualizada.',
   ]);
 });
 

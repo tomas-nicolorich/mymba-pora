@@ -18,7 +18,9 @@ export const FLAG_LABELS = [
 const ALL_UNCERTAIN = 'Cruelty-Free Kitty no pudo confirmar su política de testeo en animales.';
 const REQUIRED_BY_LAW = 'Yes, where required by law';
 
-// The five flags as raw values. The fifth is derived (see docs: decision 1).
+// The five flags as raw values. The fifth, "sold where required by law", is not a CFK field: it is derived
+// from the finished-products and third-party flags ('Yes' if either says "Yes, where required by law",
+// 'No' if both are 'No', otherwise 'Uncertain').
 function rawFlags(e) {
   const finished = e.finished_products_tested_on_animals ?? '';
   const third = e.third_party_animal_testing ?? '';
@@ -57,7 +59,7 @@ const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 
 
 function spanishDate(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '');
-  return m ? `${Number(m[3])} de ${MONTHS[Number(m[2]) - 1]} de ${m[1]}` : 'fecha desconocida';
+  return m ? `${Number(m[3])} de ${MONTHS[Number(m[2]) - 1]} de ${m[1]}` : null;
 }
 
 function cfkNotes(cfk) {
@@ -92,8 +94,9 @@ export function computeVerdict(brand) {
   if (lb || cfi) {
     const notes = [];
     if (cfk?.cruelty_free === 'No') {
+      const date = spanishDate(cfk.modified);
       notes.push(
-        `Cruelty-Free Kitty la marca como no libre de crueldad (ficha del ${spanishDate(cfk.modified)}), pero Leaping Bunny la certifica.`,
+        `Cruelty-Free Kitty la lista como no libre de crueldad${date ? ` (ficha del ${date})` : ''}. La certificación de Leaping Bunny es auditada, así que la ficha de CFK puede estar desactualizada.`,
       );
     }
     if (lb?.is_dirty_parent) notes.push('Su empresa matriz no está certificada por Leaping Bunny.');

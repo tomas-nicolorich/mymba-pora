@@ -57,7 +57,7 @@ test('only CFI with CFK "No": Certified, disagreement Note comes first', () => {
   const v = computeVerdict(brand({ cfi, cfk: cfk({ cruelty_free: 'No' }) }));
   assert.equal(v.verdict, 'certified');
   assert.equal(v.notes.length, 2);
-  assert.match(v.notes[0], /Cruelty-Free Kitty la marca como no libre/);
+  assert.match(v.notes[0], /Cruelty-Free Kitty la lista como no libre/);
   assert.equal(v.notes[1], ONLY_CFI);
 });
 
@@ -90,7 +90,7 @@ test('rule 1: CFK parent and China Notes appear on certified brands', () => {
 test('rule 1: Notes order is disagreement, Leaping Bunny parent, CFK parent/China, directory', () => {
   const v = computeVerdict(brand({ lb: { ...lb, is_dirty_parent: true }, cfk: cfk({ cruelty_free: 'No', sold_in_mainland_china: 'Uncertain' }) }));
   assert.equal(v.notes.length, 4);
-  assert.match(v.notes[0], /la marca como no libre/);
+  assert.match(v.notes[0], /la lista como no libre/);
   assert.equal(v.notes[1], 'Su empresa matriz no está certificada por Leaping Bunny.');
   assert.equal(v.notes[2], 'Cruelty-Free Kitty no pudo confirmar si se vende en China continental.');
   assert.equal(v.notes[3], ONLY_LB);

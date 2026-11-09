@@ -53,6 +53,13 @@ function greyAreaReason(entry) {
   return `Cruelty-Free Kitty no pudo confirmar: ${joinSpanish(unconfirmed)}.`;
 }
 
+const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+function spanishDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '');
+  return m ? `${Number(m[3])} de ${MONTHS[Number(m[2]) - 1]} de ${m[1]}` : 'fecha desconocida';
+}
+
 function cfkNotes(cfk) {
   const notes = [];
   const parents = Array.isArray(cfk.parent_companies) ? cfk.parent_companies : [];
@@ -72,7 +79,18 @@ function cfkNotes(cfk) {
 
 export function computeVerdict(brand) {
   const cfk = brand?.sources?.cfk;
-  // Leaping Bunny / CFI are not collected yet: every brand counts as not certified.
+  const lb = brand?.sources?.lb;
+  // Rule 1: Leaping Bunny certified, whatever CFK says. (CFI is not collected yet.)
+  if (lb) {
+    const notes = [];
+    if (cfk?.cruelty_free === 'No') {
+      notes.push(
+        `Cruelty-Free Kitty la marca como no libre de crueldad (ficha del ${spanishDate(cfk.modified)}), pero Leaping Bunny la certifica.`,
+      );
+    }
+    if (lb.is_dirty_parent) notes.push('Su empresa matriz no está certificada por Leaping Bunny.');
+    return { verdict: 'certified', label: 'Libre de crueldad · Certificada por Leaping Bunny', notes };
+  }
   if (!cfk) {
     return {
       verdict: 'unknown',

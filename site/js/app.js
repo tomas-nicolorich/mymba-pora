@@ -77,6 +77,16 @@ function showVerdictCard(brand) {
   if (v.message) detail.append(el('p', { textContent: v.message }));
   if (v.questions) detail.append(el('ul', {}, ...v.questions.map((q) => el('li', { textContent: q }))));
   if (v.greyAreaReason) detail.append(el('p', { textContent: v.greyAreaReason }));
+  for (const note of v.notes ?? []) detail.append(el('p', { class: 'note', textContent: note }));
+
+  const lb = brand.sources?.lb;
+  if (lb) {
+    detail.append(el('h3', { textContent: 'Leaping Bunny dice' }));
+    detail.append(el('p', { textContent: 'Estado: Certificada' }));
+    if (lb.categories?.length) detail.append(el('p', { textContent: `Categoría: ${lb.categories.join(', ')}` }));
+    detail.append(el('p', { class: 'dates' }, `Revisado por nosotros el ${fmtDate(lb.fetched_at)}`));
+    detail.append(el('p', {}, el('a', { href: lb.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Leaping Bunny' })));
+  }
 
   if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
 

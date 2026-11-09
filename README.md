@@ -26,6 +26,27 @@ Main Source. `scripts/fetch-lb.js` loads the Brands page to get the session cook
 
 Verdict rule 1: any Leaping Bunny entry gives "Libre de crueldad · Certificada por Leaping Bunny", whatever CFK says. Notes: CFK says "No" adds the disagreement Note with CFK's entry date; `IsDirtyParent` adds the parent-company Note. Neither changes the Verdict.
 
+## Cómo agregar un alias
+
+Editá `data/aliases.json` a mano y corré `npm run build-data`. Cada entrada nombra una Source (`cfk`, `lb`, y `cfi` cuando exista) y el nombre de la entrada tal como lo muestra esa Source (se compara también sin acentos ni mayúsculas).
+
+```json
+{
+  "same_brand": [
+    [
+      { "source": "cfk", "name": "Dr. Bronner's" },
+      { "source": "lb", "name": "Dr. Bronner's Magic Soaps" }
+    ]
+  ],
+  "ignore": [{ "source": "lb", "name": "Marca equivocada" }]
+}
+```
+
+- `same_brand`: grupos de entradas que son la misma marca; se unen en una sola (gana el nombre de la primera). Si dos entradas son de la misma Source no se pueden unir y se avisa.
+- `ignore`: saca esa entrada del dataset.
+- Un alias que apunta a una entrada que no existe no rompe nada: queda un `warning` en la salida.
+- Si dos entradas de la misma Source normalizan a la misma clave, el build avisa (`collision after normalization`), mantiene ambas como marcas separadas y el buscador las muestra con su nombre original y la Source.
+
 ## Verdict (rules 2-5 so far)
 
 The Verdict is computed in the browser from the Source entries, so rule changes never need a refetch. No Leaping Bunny data yet, so every brand counts as not certified: CFK `Yes` is Verified cruelty-free, `No` is Not cruelty-free, `Grey Area` (or any unknown value) is Grey area with a reason listing the CFK testing flags that aren't exactly "No" (finished products, ingredients, suppliers, third parties, and a derived "sold where required by law"); a brand in no Source is Unknown with three questions to ask the brand.

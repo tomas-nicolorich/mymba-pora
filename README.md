@@ -22,9 +22,13 @@ The site imports `../../src/...` and `../data/dataset.json` relative to `site/`,
 
 ## Leaping Bunny
 
-Main Source. `scripts/fetch-lb.js` loads the Brands page to get the session cookie and the anti-forgery form token, then calls `/api/Query` (`List of Brands`, 50 per request, 2 s apart, same client name) following `HasNext`/`NextOffset` (about 2,300 brands). Kept per brand: `BrandId`, `TradingName`, `IsDirtyParent`, `fetched_at`, source URL and the detail-page link; categories are not on list items, so they are omitted until a later ticket adds them (the card shows them when present). Entries match brands on the normalized `TradingName` only, never `CompanyName`. `npm run build-data` now fetches both Sources.
+Main Source. `scripts/fetch-lb.js` loads the Brands page to get the session cookie and the anti-forgery form token, then calls `/api/Query` (`List of Brands`, 50 per request, 2 s apart, same client name) following `HasNext`/`NextOffset` (about 2,300 brands). Kept per brand: `BrandId`, `TradingName`, `IsDirtyParent`, `fetched_at`, source URL and the detail-page link; categories are not on list items, so they are omitted until a later ticket adds them (the card shows them when present). Entries match brands on the normalized `TradingName` only, never `CompanyName`. `npm run build-data` fetches all three Sources.
 
-Verdict rule 1: any Leaping Bunny entry gives "Libre de crueldad · Certificada por Leaping Bunny", whatever CFK says. Notes: CFK says "No" adds the disagreement Note with CFK's entry date; `IsDirtyParent` adds the parent-company Note. Neither changes the Verdict.
+## Cruelty Free International
+
+Second Source for the same certification. `scripts/fetch-cfi.js` reads the public WordPress REST collection `approved_bra_dir_ltg` (about 418 brands, 100 per page, 2 s apart, same client name). Kept per brand: decoded title, link, publication date (`date`, shown as "En el directorio desde"), `fetched_at` and source URL. The directory has no categories. Entries match on the normalized name, like CFK.
+
+Verdict rule 1: a brand listed in Leaping Bunny **or** Cruelty Free International gives "Libre de crueldad · Certificada por Leaping Bunny", whatever CFK says. Notes (they never change the Verdict, across rules 1-4), in this order: CFK says "No" (disagreement, with CFK's entry date); `IsDirtyParent`; CFK parent company and China Notes (also on certified brands); "Solo figura en el directorio de ..." when only one directory lists the brand. Rules 2-4 add a Note when CFK tags the brand "Leaping Bunny" but neither directory lists it.
 
 ## Verdict (rules 2-5 so far)
 

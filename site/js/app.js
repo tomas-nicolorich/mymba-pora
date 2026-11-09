@@ -88,6 +88,16 @@ function showVerdictCard(brand) {
     detail.append(el('p', {}, el('a', { href: lb.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Leaping Bunny' })));
   }
 
+  const cfi = brand.sources?.cfi;
+  if (cfi) {
+    detail.append(el('h3', { textContent: 'Cruelty Free International dice' }));
+    detail.append(el('p', { textContent: 'Estado: Aprobada' }));
+    detail.append(el('p', { class: 'dates' },
+      `En el directorio desde ${fmtDate(cfi.date)}`, el('br'),
+      `Revisado por nosotros el ${fmtDate(cfi.fetched_at)}`));
+    detail.append(el('p', {}, el('a', { href: cfi.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Cruelty Free International' })));
+  }
+
   if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
 
   const cfk = brand.sources?.cfk;

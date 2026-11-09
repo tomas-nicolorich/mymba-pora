@@ -35,9 +35,12 @@ function cfkEntry(item, { fetchedAt, sourceUrl }) {
 export const LB_DETAIL_URL = 'https://www.leapingbunny.org/ShopBrandDetail?BrandId=';
 
 function lbEntry(item, { fetchedAt, sourceUrl }, detail) {
+  const tradingName = decodeEntities(item.TradingName);
   const entry = {
     brand_id: item.BrandId,
-    trading_name: decodeEntities(item.TradingName),
+    // CompanyName is what leapingbunny.org displays (TradingName is the legal entity and can name another brand).
+    name: decodeEntities(item.CompanyName).trim() || tradingName,
+    trading_name: tradingName,
     is_dirty_parent: item.IsDirtyParent === 'Yes',
   };
   const categories = detail?.categories?.length ? detail.categories : item.categories;
@@ -49,20 +52,20 @@ function lbEntry(item, { fetchedAt, sourceUrl }, detail) {
   return entry;
 }
 
-// Attach Leaping Bunny entries by normalized TradingName only (never CompanyName).
+// Attach Leaping Bunny entries by normalized display name (CompanyName, falling back to TradingName), never the legal TradingName.
 function mergeLeapingBunny(brands, lb, warnings, details) {
   if (!lb?.items?.length) throw new Error('Leaping Bunny returned no brands');
   const byKey = new Map();
   for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
   for (const item of lb.items) {
     const entry = lbEntry(item, lb, details[item.BrandId]);
-    const key = normalizeName(entry.trading_name);
+    const key = normalizeName(entry.name);
     const target = byKey.get(key);
     if (target && !target.sources.lb) {
       target.sources.lb = entry;
     } else {
-      if (target) warnings.push(`${SOURCE_LABELS.lb} collision after normalization: "${entry.trading_name}" (key "${key}")`);
-      const brand = { name: entry.trading_name, key, sources: { lb: entry } };
+      if (target) warnings.push(`${SOURCE_LABELS.lb} collision after normalization: "${entry.name}" (key "${key}")`);
+      const brand = { name: entry.name, key, sources: { lb: entry } };
       brands.push(brand);
       if (!byKey.has(key)) byKey.set(key, brand);
     }
@@ -99,7 +102,7 @@ function mergeCfi(brands, cfi, warnings) {
   }
 }
 
-// Generic over Sources: every Source entry has its display name in `name` (cfk, cfi) or `trading_name` (lb).
+// Generic over Sources: every Source entry has its display name in `name` (cfk, cfi, lb; `trading_name` only as a legacy fallback).
 const entryName = (entry) => entry.name ?? entry.trading_name ?? '';
 
 // Find the brand holding the Source entry an Alias refers to: exact name first, then normalized name.

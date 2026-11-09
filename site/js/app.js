@@ -78,6 +78,8 @@ function showVerdictCard(brand) {
   if (v.questions) detail.append(el('ul', {}, ...v.questions.map((q) => el('li', { textContent: q }))));
   if (v.greyAreaReason) detail.append(el('p', { textContent: v.greyAreaReason }));
 
+  if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
+
   const cfk = brand.sources?.cfk;
   if (cfk) {
     detail.append(el('h3', { textContent: 'Cruelty-Free Kitty dice' }));

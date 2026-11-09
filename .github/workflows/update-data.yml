@@ -1,6 +1,7 @@
-# Weekly data refresh and GitHub Pages deploy.
-# Any failing step (tests, a Source fetch, the safety rails in scripts/job.js) stops the run:
-# nothing is committed or deployed and the run turns red, so GitHub notifies the maintainer.
+# Weekly data refresh and GitHub Pages deploy, as one job.
+# Order: test, build data, build site, upload, deploy, and only then commit the data.
+# Any failing step (tests, a Source fetch, the safety rails in scripts/job.js, the deploy) stops the run:
+# nothing is committed, and the run turns red so GitHub notifies the maintainer.
 name: Update data and deploy
 
 on:
@@ -13,11 +14,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     timeout-minutes: 120 # the first run takes ~80 minutes (Leaping Bunny detail pages, 2 s apart)
     permissions:
-      contents: write
+      contents: write # push the data commit
+      pages: write # deploy to GitHub Pages
+      id-token: write # Pages deploy authenticates with an OIDC token
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -25,6 +31,12 @@ jobs:
           node-version: '26'
       - run: npm test
       - run: npm run build-data
+      - run: npm run build-site
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
       - name: Commit the dataset and Leaping Bunny cache
         run: |
           git add data/dataset.json data/lb-details.json
@@ -36,21 +48,3 @@ jobs:
             git commit -m "chore(data): weekly refresh $(date -u +%F)"
             git push
           fi
-      - run: npm run build-site
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

@@ -27,18 +27,25 @@ test('third-party actions are pinned to commit SHAs', () => {
   for (const u of uses) assert.match(u, /@[0-9a-f]{40}$/, u);
 });
 
-test('data is committed only after tests and the data job, and before the deploy', () => {
+test('data is committed only after tests, data, site build, upload and a successful deploy', () => {
   const at = (re) => text.search(re);
-  assert.ok(at(/run: npm test/) > -1);
-  assert.ok(at(/run: npm test/) < at(/run: npm run build-data/));
-  assert.ok(at(/run: npm run build-data/) < at(/git commit/));
-  assert.ok(at(/git commit/) < at(/uses: actions\/deploy-pages@/));
+  const order = [
+    /run: npm test/,
+    /run: npm run build-data/,
+    /run: npm run build-site/,
+    /uses: actions\/upload-pages-artifact@/,
+    /uses: actions\/deploy-pages@/,
+    /git commit/,
+  ];
+  for (const re of order) assert.ok(at(re) > -1, String(re));
+  for (let i = 1; i < order.length; i++) assert.ok(at(order[i - 1]) < at(order[i]), `${order[i - 1]} before ${order[i]}`);
+  assert.equal([...text.matchAll(/^  [a-z-]+:\n    runs-on:/gm)].length, 1, 'a single job');
+  for (const perm of ['contents: write', 'pages: write', 'id-token: write']) assert.match(text, new RegExp(perm));
   assert.match(text, /git commit -m "chore\(data\): /);
   assert.match(text, /git add data\/dataset\.json data\/lb-details\.json/);
   assert.doesNotMatch(text, /if: (always|failure)\(\)/);
 });
 
-test('deploy needs the build job and uses the github-pages environment', () => {
-  assert.match(text, /needs: build/);
+test('the job uses the github-pages environment', () => {
   assert.match(text, /name: github-pages/);
 });

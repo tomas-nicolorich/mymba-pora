@@ -69,6 +69,36 @@ function mergeLeapingBunny(brands, lb, warnings, details) {
   }
 }
 
+function cfiEntry(item, { fetchedAt, sourceUrl }) {
+  return {
+    name: decodeEntities(item.title?.rendered),
+    link: item.link,
+    date: item.date,
+    fetched_at: fetchedAt,
+    source_url: sourceUrl,
+  };
+}
+
+// Attach Cruelty Free International entries by normalized name (it has no categories).
+function mergeCfi(brands, cfi, warnings) {
+  if (!cfi?.items?.length) throw new Error('Cruelty Free International returned no brands');
+  const byKey = new Map();
+  for (const b of brands) if (!byKey.has(b.key)) byKey.set(b.key, b);
+  for (const item of cfi.items) {
+    const entry = cfiEntry(item, cfi);
+    const key = normalizeName(entry.name);
+    const target = byKey.get(key);
+    if (target && !target.sources.cfi) {
+      target.sources.cfi = entry;
+    } else {
+      if (target) warnings.push(`${SOURCE_LABELS.cfi} collision after normalization: "${entry.name}" (key "${key}")`);
+      const brand = { name: entry.name, key, sources: { cfi: entry } };
+      brands.push(brand);
+      if (!byKey.has(key)) byKey.set(key, brand);
+    }
+  }
+}
+
 // Generic over Sources: every Source entry has its display name in `name` (cfk, cfi) or `trading_name` (lb).
 const entryName = (entry) => entry.name ?? entry.trading_name ?? '';
 
@@ -121,7 +151,7 @@ function applyAliases(brands, aliases, warnings) {
   }
 }
 
-export function buildDataset({ generatedAt, cfk, lb, lbDetails = {}, aliases }) {
+export function buildDataset({ generatedAt, cfk, lb, cfi, lbDetails = {}, aliases }) {
   if (!cfk?.items?.length) throw new Error('CFK returned no brands');
   const warnings = [];
   const brands = [];
@@ -148,8 +178,12 @@ export function buildDataset({ generatedAt, cfk, lb, lbDetails = {}, aliases }) 
     mergeLeapingBunny(brands, lb, warnings, lbDetails);
     counts.lb = lb.items.length;
   }
+  if (cfi) {
+    mergeCfi(brands, cfi, warnings);
+    counts.cfi = cfi.items.length;
+  }
   applyAliases(brands, aliases, warnings);
-  const sortLink = (b) => b.sources.cfk?.link ?? b.sources.lb?.link ?? '';
+  const sortLink = (b) => b.sources.cfk?.link ?? b.sources.lb?.link ?? b.sources.cfi?.link ?? '';
   brands.sort((a, b) => a.key.localeCompare(b.key) || sortLink(a).localeCompare(sortLink(b)));
   return { dataset: { generated_at: generatedAt, counts, brands }, warnings };
 }

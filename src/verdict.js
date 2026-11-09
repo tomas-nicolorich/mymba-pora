@@ -60,6 +60,23 @@ function spanishDate(iso) {
   return m ? `${Number(m[3])} de ${MONTHS[Number(m[2]) - 1]} de ${m[1]}` : 'fecha desconocida';
 }
 
+function cfkNotes(cfk) {
+  const notes = [];
+  const parents = Array.isArray(cfk.parent_companies) ? cfk.parent_companies : [];
+  if (parents.length && !cfk.parent_company_doesnt_test) {
+    notes.push(`Su empresa matriz (${joinSpanish(parents)}) testea en animales, según Cruelty-Free Kitty.`);
+  }
+  const china = String(cfk.sold_in_mainland_china ?? '');
+  if (china.startsWith('Yes')) {
+    notes.push(
+      'Cruelty-Free Kitty indica que se vende en tiendas físicas de China continental. Es un punto discutido: si la marca está certificada por Leaping Bunny, esa certificación debería pesar más.',
+    );
+  } else if (china === 'Uncertain') {
+    notes.push('Cruelty-Free Kitty no pudo confirmar si se vende en China continental.');
+  }
+  return notes;
+}
+
 export function computeVerdict(brand) {
   const cfk = brand?.sources?.cfk;
   const lb = brand?.sources?.lb;
@@ -84,15 +101,16 @@ export function computeVerdict(brand) {
     };
   }
   const status = cfk.cruelty_free;
+  const notes = cfkNotes(cfk);
   if (status === 'Yes') {
     return {
       verdict: 'verified',
       label: 'Libre de crueldad · Verificada por Cruelty-Free Kitty, sin certificación',
-      notes: [],
+      notes,
     };
   }
   if (status === 'No') {
-    return { verdict: 'not_cruelty_free', label: 'No es libre de crueldad', notes: [] };
+    return { verdict: 'not_cruelty_free', label: 'No es libre de crueldad', notes };
   }
   // 'Grey Area' and any unrecognised value (e.g. 'MLM') land here; the raw value is kept for display.
   return {
@@ -100,6 +118,6 @@ export function computeVerdict(brand) {
     label: 'Zona gris',
     greyAreaReason: greyAreaReason(cfk),
     rawStatus: status,
-    notes: [],
+    notes,
   };
 }

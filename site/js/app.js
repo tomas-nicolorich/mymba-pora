@@ -88,6 +88,8 @@ function showVerdictCard(brand) {
     detail.append(el('p', {}, el('a', { href: lb.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Leaping Bunny' })));
   }
 
+  if (v.notes?.length) detail.append(el('ul', { class: 'notes' }, ...v.notes.map((n) => el('li', { textContent: n }))));
+
   const cfk = brand.sources?.cfk;
   if (cfk) {
     detail.append(el('h3', { textContent: 'Cruelty-Free Kitty dice' }));

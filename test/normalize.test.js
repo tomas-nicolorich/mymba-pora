@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeName } from '../src/normalize.js';
+import { normalizeName, decodeEntities } from '../src/normalize.js';
 
 test('loreal variants share one key', () => {
   const keys = ['loreal', "L'Oréal", 'L OREAL', 'L’ORÉAL'].map(normalizeName);
@@ -30,4 +30,10 @@ test('HTML entities are decoded first', () => {
   assert.equal(normalizeName('CHASIN&#8217; RABBITS'), normalizeName("Chasin' Rabbits"));
   assert.equal(normalizeName('Estée &amp; Co'), normalizeName('Estee and Co'));
   assert.equal(normalizeName('A &amp;#8217; B'), normalizeName("A' B"));
+});
+
+test('multiply-encoded entities decode fully', () => {
+  assert.equal(decodeEntities('Grace &amp;amp; Stella'), 'Grace & Stella');
+  assert.equal(decodeEntities('Grace &amp;amp;#038; Stella'), 'Grace & Stella');
+  assert.equal(decodeEntities('Grace &amp;#038; Stella'), 'Grace & Stella');
 });

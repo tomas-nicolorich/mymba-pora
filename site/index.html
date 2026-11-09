@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mymba Porã</title>
+  <meta name="description" content="¿Esta marca es libre de crueldad? Buscala acá.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <svg class="logo" viewBox="0 0 64 64" role="img" aria-label="Coatí" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <title>Coatí</title>
+      <!-- ringed tail, curling up behind -->
+      <path d="M40 50c12 2 18-6 15-16s-2-16 2-22"/>
+      <path d="M49 51l-1-7M55 46l-5-4M57 36l-6-2M56 26l-6 0" />
+      <!-- body and head -->
+      <path class="ink" d="M14 40c0-10 6-17 15-17 8 0 13 4 15 11l1 14H22c-5 0-8-3-8-8z"/>
+      <!-- long snout -->
+      <path class="ink" d="M14 40c-4 1-8 3-10 6 2 3 7 3 11 1"/>
+      <path class="ink" d="M22 25l-1-7 7 3M33 24l3-7 4 8"/>
+      <circle class="ink" cx="4.5" cy="46" r="1.4"/>
+      <circle class="ink" cx="19" cy="38" r="1.4"/>
+      <!-- legs -->
+      <path class="ink" d="M26 52v6M38 52v6"/>
+    </svg>
+    <div>
+      <h1>Mymba Porã</h1>
+      <p>¿Esa marca es libre de crueldad?</p>
+    </div>
+  </header>
+  <main>
+    <div class="search">
+      <label for="q">Nombre de la marca</label>
+      <input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+             role="combobox" aria-expanded="false" aria-controls="suggestions" placeholder="Ej.: Maybelline">
+      <ul id="suggestions" role="listbox" hidden></ul>
+    </div>
+    <p id="status" role="status" hidden></p>
+    <section id="result" aria-live="polite"></section>
+  </main>
+  <footer>
+    <p id="updated">Datos actualizados: …</p>
+    <p>Este sitio combina fuentes de terceros y no es una certificación. Verificá siempre en las fuentes originales.</p>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

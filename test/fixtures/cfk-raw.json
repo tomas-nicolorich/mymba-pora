@@ -1,0 +1,59 @@
+[
+  {
+    "id": 36586,
+    "link": "https://www.crueltyfreekitty.com/brands/australian-glow/",
+    "title": { "rendered": "Australian Glow" },
+    "modified": "2026-03-31T19:19:49",
+    "yoast_head": "<title>dropped</title>",
+    "content": { "rendered": "<p>description that must not be published</p>" },
+    "acf": {
+      "cruelty_free": "Yes",
+      "finished_products_tested_on_animals": "",
+      "ingredients_tested_on_animals": "",
+      "suppliers_test_on_animals": "",
+      "third_party_animal_testing": "",
+      "sold_in_mainland_china": "",
+      "parent_company": false,
+      "attributes": [{ "name": "Parent company doesn't test on animals", "slug": "x" }, { "name": "Sustainable" }],
+      "certifications": [{ "name": "PETA", "slug": "peta" }],
+      "brand_policy": "<p>long html</p>",
+      "brand_website": "https://affiliate.example/?ref=cfk"
+    }
+  },
+  {
+    "id": 36555,
+    "link": "https://www.crueltyfreekitty.com/brands/frederic-malle/",
+    "title": { "rendered": "Frederic Malle" },
+    "modified": "2026-02-01T10:00:00",
+    "acf": {
+      "cruelty_free": "No",
+      "finished_products_tested_on_animals": "Yes, where required by law",
+      "ingredients_tested_on_animals": "Uncertain",
+      "suppliers_test_on_animals": "Uncertain",
+      "third_party_animal_testing": "",
+      "sold_in_mainland_china": "Uncertain",
+      "parent_company": [{ "name": "Est&#233;e Lauder", "term_id": 1 }, { "name": "PDC Wellness &amp; Personal Care" }],
+      "attributes": false,
+      "certifications": null
+    }
+  },
+  {
+    "id": 62717,
+    "link": "https://www.crueltyfreekitty.com/brands/chasin-rabbits/",
+    "title": { "rendered": "CHASIN&#8217; RABBITS" },
+    "modified": "2025-11-29T07:08:20",
+    "acf": {
+      "cruelty_free": "Grey Area",
+      "parent_company": false,
+      "attributes": false,
+      "certifications": [{ "name": "Leaping Bunny" }, { "name": "PETA" }]
+    }
+  },
+  {
+    "id": 1,
+    "link": "https://www.crueltyfreekitty.com/brands/mystery/",
+    "title": { "rendered": "Mystery &amp; Co" },
+    "modified": "2025-01-01T00:00:00",
+    "acf": { "cruelty_free": "MLM" }
+  }
+]

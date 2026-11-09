@@ -1,0 +1,5 @@
+[
+  { "BrandId": 1719, "TradingName": "Australian Glow Pty Ltd", "CompanyName": "Australian Glow", "ShortDescription": "dropped", "IsLogoUser": "Yes", "IsDirtyParent": "Yes", "ClassNames": "LogoUser DirtyParent ", "Logo": "files/x.png", "IsCanadian": false },
+  { "BrandId": 1231, "TradingName": "[ p H 7 ]", "CompanyName": "ph7 natura beauty inc", "ShortDescription": "dropped", "IsLogoUser": "No", "IsDirtyParent": null, "ClassNames": "", "Logo": "files/y.png", "IsCanadian": false },
+  { "BrandId": 2000, "TradingName": "Editions de Parfums Frederic Malle SAS", "CompanyName": "Frederic Malle", "IsDirtyParent": null }
+]

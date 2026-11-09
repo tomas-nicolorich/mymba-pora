@@ -8,7 +8,7 @@ const read = (f) => JSON.parse(readFileSync(new URL(`./fixtures/${f}`, import.me
 const CFI_URL = 'https://www.crueltyfreeinternational.org/wp-json/wp/v2/approved_bra_dir_ltg';
 const input = {
   generatedAt: '2026-11-09T13:00:00Z',
-  cfk: { items: read('cfk-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
+  cfk: { items: read('cfk-raw.json'), parents: read('cfk-parents-raw.json'), fetchedAt: '2026-11-09T12:00:00Z', sourceUrl: 'https://cfk.example/api' },
   lb: { items: read('lb-raw.json'), fetchedAt: '2026-11-09T12:30:00Z', sourceUrl: 'https://www.leapingbunny.org/api/Query' },
   cfi: { items: read('cfi-raw.json'), fetchedAt: '2026-11-09T12:45:00Z', sourceUrl: CFI_URL },
 };

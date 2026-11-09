@@ -5,7 +5,7 @@ import { runJob, checkCounts } from '../scripts/job.js';
 
 const read = (f) => JSON.parse(readFileSync(new URL(`./fixtures/${f}`, import.meta.url), 'utf8'));
 const raw = {
-  cfk: { items: read('cfk-raw.json'), fetchedAt: 't', sourceUrl: 'u' },
+  cfk: { items: read('cfk-raw.json'), parents: read('cfk-parents-raw.json'), fetchedAt: 't', sourceUrl: 'u' },
   lb: { items: read('lb-raw.json'), fetchedAt: 't', sourceUrl: 'u' },
   cfi: { items: read('cfi-raw.json'), fetchedAt: 't', sourceUrl: 'u' },
 };

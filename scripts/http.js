@@ -7,8 +7,8 @@ const PER_PAGE = 100;
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Fetches every page of a WordPress REST collection, one request at a time, `delayMs` apart.
-// `label` names the Source in log and error messages.
-export async function fetchWordPressCollection({ endpoint, fields, label, fetchImpl = fetch, delayMs = DELAY_MS, log = () => {} }) {
+// `label` names the Source in log and error messages; `noun` names what each item is in the log.
+export async function fetchWordPressCollection({ endpoint, fields, label, noun = 'brands', fetchImpl = fetch, delayMs = DELAY_MS, log = () => {} }) {
   const items = [];
   let totalPages = 1;
   for (let page = 1; page <= totalPages; page++) {
@@ -20,7 +20,7 @@ export async function fetchWordPressCollection({ endpoint, fields, label, fetchI
     const batch = await res.json();
     if (!Array.isArray(batch)) throw new Error(`${label} page ${page}: unexpected response`);
     items.push(...batch);
-    log(`${label} page ${page}/${totalPages}: ${batch.length} brands`);
+    log(`${label} page ${page}/${totalPages}: ${batch.length} ${noun}`);
   }
   return { items, fetchedAt: new Date().toISOString(), sourceUrl: endpoint };
 }

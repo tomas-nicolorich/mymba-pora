@@ -10,7 +10,7 @@ const cfkItem = (title) => ({
 const lbItem = (id, name) => ({ BrandId: id, TradingName: name });
 const base = (cfk, lb, aliases) => ({
   generatedAt: 'x',
-  cfk: { items: cfk, fetchedAt: 't', sourceUrl: 'u' },
+  cfk: { items: cfk, parents: [{ id: 1, slug: 'p', name: 'P', acf: { cruelty_free: 'No' } }], fetchedAt: 't', sourceUrl: 'u' },
   lb: { items: lb, fetchedAt: 't', sourceUrl: 'u' },
   aliases,
 });

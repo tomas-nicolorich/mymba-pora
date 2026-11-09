@@ -82,7 +82,7 @@ test('CFK Leaping Bunny tag is no Note when a directory lists the brand', () => 
 
 // Rule 1 also gets the CFK parent/China Notes (spec story 23; #6 "across rules 1-4").
 test('rule 1: CFK parent and China Notes appear on certified brands', () => {
-  const v = computeVerdict(brand({ lb, cfi, cfk: cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' }) }));
+  const v = computeVerdict(brand({ lb, cfi, cfk: cfk({ parent_companies: [{ name: 'A', cruelty_free: 'No' }], sold_in_mainland_china: 'Yes' }) }));
   assert.equal(v.verdict, 'certified');
   assert.deepEqual(v.notes, [PARENT_NOTE, CHINA_YES_NOTE]);
 });
@@ -99,7 +99,7 @@ test('rule 1: Notes order is disagreement, Leaping Bunny parent, CFK parent/Chin
 for (const [name, sources] of [['lb', { lb }], ['cfi', { cfi }], ['both', { lb, cfi }]]) {
   test(`rule 1 (${name}): CFK notes never change the Verdict`, () => {
     const plain = computeVerdict(brand({ ...sources, cfk: cfk() }));
-    const noisy = computeVerdict(brand({ ...sources, cfk: cfk({ parent_companies: ['A'], sold_in_mainland_china: 'Yes' }) }));
+    const noisy = computeVerdict(brand({ ...sources, cfk: cfk({ parent_companies: [{ name: 'A', cruelty_free: 'No' }], sold_in_mainland_china: 'Yes' }) }));
     assert.equal(noisy.verdict, 'certified');
     assert.equal(noisy.label, plain.label);
     assert.equal(noisy.notes.length, plain.notes.length + 2);

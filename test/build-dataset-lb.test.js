@@ -44,7 +44,8 @@ test('merged brands feed the Verdict', () => {
   const { dataset } = buildDataset(input);
   const fm = computeVerdict(byName(dataset, 'Frederic Malle'));
   assert.equal(fm.verdict, 'certified');
-  assert.equal(fm.notes.length, 2); // CFK disagreement + only in the Leaping Bunny directory
+  // CFK disagreement, CFK parent, CFK China Uncertain, only in the Leaping Bunny directory
+  assert.equal(fm.notes.length, 4);
   const ag = computeVerdict(byName(dataset, 'Australian Glow'));
   assert.equal(ag.verdict, 'certified');
   assert.deepEqual(ag.notes, [

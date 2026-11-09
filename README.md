@@ -54,6 +54,24 @@ Editá `data/aliases.json` a mano y corré `npm run build-data`. Cada entrada no
 - Un alias que apunta a una entrada que no existe no rompe nada: queda un `warning` en la salida.
 - Si dos entradas de la misma Source normalizan a la misma clave, el build avisa (`collision after normalization`), mantiene ambas como marcas separadas y el buscador las muestra con su nombre original y la Source.
 
-## Verdict (rules 2-5 so far)
+## Weekly job and deploy
+
+`.github/workflows/update-data.yml` runs every Monday (06:17 UTC) and on manual trigger (Actions tab, "Run workflow"), on Node 26 with a 120-minute timeout (the first run takes about 80 minutes because of the Leaping Bunny detail pages). Steps: `npm test`, `npm run build-data`, commit `data/dataset.json` and `data/lb-details.json` as `chore(data): weekly refresh <date>` (skipped when nothing changed), `npm run build-site`, then a second job deploys `dist/` to GitHub Pages. If any step fails (including the safety rails above) nothing is committed or deployed and the run turns red, so GitHub emails the maintainer. Third-party actions are pinned to commit SHAs. Pages must be enabled with source "GitHub Actions" in the repo settings before the deploy job can succeed.
+
+Run the job locally: `npm run build-data` (needs network, takes a few minutes once the cache is warm, about 80 minutes on the first run), then `npm run build-site` and `python3 -m http.server -d dist` to preview. Terms (Source, Source entry, Verdict, Note, Alias) are defined in [GLOSSARY.md](GLOSSARY.md).
+
+## Verdict
+
+The five rules, in order:
+
+1. Leaping Bunny certified (listed in Leaping Bunny or Cruelty Free International): Certified cruelty-free, whatever CFK says.
+2. Not certified, CFK `Yes`: Verified cruelty-free.
+3. Not certified, CFK `No`: Not cruelty-free.
+4. Not certified, CFK `Grey Area` (or any unknown value): Grey area, with a reason built from the CFK flags that are not "No".
+5. In no Source: Unknown, with three questions to ask the brand.
+
+Notes qualify the Verdict but never change it: CFK disagrees with a certified brand, parent company (CFK, or Leaping Bunny `IsDirtyParent`), mainland China (Yes or Uncertain), only one certification directory lists the brand, and CFK tags the brand Leaping Bunny but neither directory lists it.
+
+Details of the current implementation:
 
 The Verdict is computed in the browser from the Source entries, so rule changes never need a refetch. No Leaping Bunny data yet, so every brand counts as not certified: CFK `Yes` is Verified cruelty-free, `No` is Not cruelty-free, `Grey Area` (or any unknown value) is Grey area with a reason listing the CFK testing flags that aren't exactly "No" (finished products, ingredients, suppliers, third parties, and a derived "sold where required by law"); a brand in no Source is Unknown with three questions to ask the brand.

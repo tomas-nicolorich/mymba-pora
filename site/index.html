@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mymba Porã</title>
+  <meta name="description" content="¿Esta marca es libre de crueldad? Buscala acá.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Mymba Porã</h1>
+    <p>¿Esa marca es libre de crueldad?</p>
+  </header>
+  <main>
+    <div class="search">
+      <label for="q">Nombre de la marca</label>
+      <input id="q" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+             role="combobox" aria-expanded="false" aria-controls="suggestions" placeholder="Ej.: Maybelline">
+      <ul id="suggestions" role="listbox" hidden></ul>
+    </div>
+    <p id="status" role="status" hidden></p>
+    <section id="result" aria-live="polite"></section>
+  </main>
+  <footer>
+    <p id="updated">Datos actualizados: …</p>
+    <p>Este sitio combina fuentes de terceros y no es una certificación. Verificá siempre en las fuentes originales.</p>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

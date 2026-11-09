@@ -14,6 +14,7 @@ Requires Node >= 26. No npm dependencies.
 ## Layout
 
 - `src/` pure modules shared by Node and the browser, no build step: `normalize.js`, `verdict.js`.
+- Safety rails (`scripts/job.js`): `npm run build-data` exits non-zero, naming the Source, if any Source fetch fails or a Source returns under 90% of its previous brand count (`counts` in `data/dataset.json`; message shows both counts). A Source with no previous count uses first-run minimums (CFK 1300, Leaping Bunny 2000, Cruelty Free International 350). On failure `data/dataset.json` and `data/lb-details.json` are untouched; both are written only after validation passes.
 - `scripts/` Node-only: fetchers, `build-dataset.js` (pure), CLI entry points.
 - `site/` static frontend; Fuse.js 7.5.0 is vendored in `site/vendor/` (Apache-2.0, license alongside).
 - `data/` generated dataset. `test/` tests and fixtures.

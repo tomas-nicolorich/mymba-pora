@@ -95,9 +95,8 @@ function showVerdictCard(brand) {
   if (cfi) {
     detail.append(el('h3', { textContent: 'Cruelty Free International dice' }));
     detail.append(el('p', { textContent: 'Estado: Aprobada' }));
-    detail.append(el('p', { class: 'dates' },
-      `En el directorio desde ${fmtDate(cfi.date)}`, el('br'),
-      `Revisado por nosotros el ${fmtDate(cfi.fetched_at)}`));
+    // The CFI `date` is the listing's WordPress publication date, not an approval date, so it isn't shown (#14).
+    detail.append(el('p', { class: 'dates' }, `Revisado por nosotros el ${fmtDate(cfi.fetched_at)}`));
     detail.append(el('p', {}, el('a', { href: cfi.link, rel: 'noopener', target: '_blank', textContent: 'Ver la ficha en Cruelty Free International' })));
   }
 

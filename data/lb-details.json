@@ -5,7 +5,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:32.311Z"
+  "fetched_at": "2026-11-16T15:49:09.623Z"
  },
  "2": {
   "year": 2026,
@@ -58,7 +58,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:32.271Z"
+  "fetched_at": "2026-11-16T15:51:04.663Z"
  },
  "9": {
   "year": 2026,
@@ -81,7 +81,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:43.598Z"
+  "fetched_at": "2026-11-16T15:51:15.535Z"
  },
  "12": {
   "year": 2026,
@@ -295,7 +295,7 @@
    "BODY FRAGRANCE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:10.619Z"
+  "fetched_at": "2026-11-16T15:51:41.748Z"
  },
  "40": {
   "year": 2025,
@@ -714,7 +714,7 @@
    "FACE CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:07.472Z"
+  "fetched_at": "2026-11-16T15:50:40.868Z"
  },
  "90": {
   "year": 2025,
@@ -736,7 +736,7 @@
   "categories": [
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:08.366Z"
+  "fetched_at": "2026-11-16T15:51:39.590Z"
  },
  "93": {
   "year": 2025,
@@ -758,7 +758,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:53.990Z"
+  "fetched_at": "2026-11-16T15:50:27.890Z"
  },
  "95": {
   "year": 2026,
@@ -1138,7 +1138,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:22:21.901Z"
+  "fetched_at": "2026-11-16T15:51:52.559Z"
  },
  "147": {
   "year": 2025,
@@ -1675,7 +1675,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:18:55.939Z"
+  "fetched_at": "2026-11-16T15:48:34.650Z"
  },
  "226": {
   "year": 2025,
@@ -1700,7 +1700,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:49.447Z"
+  "fetched_at": "2026-11-16T15:50:23.581Z"
  },
  "229": {
   "year": 2025,
@@ -1990,7 +1990,7 @@
  "267": {
   "year": 2024,
   "categories": [],
-  "fetched_at": "2026-11-09T12:22:35.384Z"
+  "fetched_at": "2026-11-16T15:52:05.626Z"
  },
  "268": {
   "year": 2024,
@@ -2124,7 +2124,7 @@
    "HAIR CARE",
    "MEN'S CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:47.202Z"
+  "fetched_at": "2026-11-16T15:50:21.421Z"
  },
  "287": {
   "year": 2024,
@@ -2270,7 +2270,7 @@
    "BODY FRAGRANCE",
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:08.684Z"
+  "fetched_at": "2026-11-16T15:49:44.374Z"
  },
  "307": {
   "year": 2024,
@@ -2453,7 +2453,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:00.730Z"
+  "fetched_at": "2026-11-16T15:50:34.383Z"
  },
  "333": {
   "year": 2025,
@@ -2980,7 +2980,7 @@
    "LIP COLOR",
    "NAIL COLOR"
   ],
-  "fetched_at": "2026-11-09T12:19:00.475Z"
+  "fetched_at": "2026-11-16T15:48:39.016Z"
  },
  "405": {
   "year": 2024,
@@ -3050,7 +3050,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:19:55.153Z"
+  "fetched_at": "2026-11-16T15:49:31.296Z"
  },
  "416": {
   "year": 2024,
@@ -3204,7 +3204,7 @@
    "LIP COLOR",
    "NAIL COLOR"
   ],
-  "fetched_at": "2026-11-09T12:22:12.861Z"
+  "fetched_at": "2026-11-16T15:51:43.899Z"
  },
  "432": {
   "year": 2024,
@@ -3348,7 +3348,7 @@
   "categories": [
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:25.506Z"
+  "fetched_at": "2026-11-16T15:50:58.146Z"
  },
  "453": {
   "year": 2024,
@@ -3394,7 +3394,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:52.604Z"
+  "fetched_at": "2026-11-16T15:51:24.199Z"
  },
  "459": {
   "year": 2024,
@@ -3581,7 +3581,7 @@
    "BATH & SHOWER CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:48.111Z"
+  "fetched_at": "2026-11-16T15:51:19.883Z"
  },
  "488": {
   "year": 2024,
@@ -3676,7 +3676,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:21:54.869Z"
+  "fetched_at": "2026-11-16T15:51:26.448Z"
  },
  "499": {
   "year": 2023,
@@ -3943,7 +3943,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:50.360Z"
+  "fetched_at": "2026-11-16T15:51:22.044Z"
  },
  "535": {
   "year": 2023,
@@ -4203,7 +4203,7 @@
    "HAIR CARE",
    "MEN'S CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:19.644Z"
+  "fetched_at": "2026-11-16T15:51:50.399Z"
  },
  "571": {
   "year": 2023,
@@ -4252,7 +4252,7 @@
   "categories": [
    "SHAVING/DEPILATORY"
   ],
-  "fetched_at": "2026-11-09T12:22:30.894Z"
+  "fetched_at": "2026-11-16T15:52:01.215Z"
  },
  "577": {
   "year": 2023,
@@ -4408,7 +4408,7 @@
    "BATH & SHOWER CARE",
    "HAND SANITIZER"
   ],
-  "fetched_at": "2026-11-09T12:20:24.580Z"
+  "fetched_at": "2026-11-16T15:49:59.579Z"
  },
  "598": {
   "year": 2023,
@@ -4770,7 +4770,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:59.378Z"
+  "fetched_at": "2026-11-16T15:51:30.831Z"
  },
  "646": {
   "year": 2023,
@@ -5375,7 +5375,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:19:43.860Z"
+  "fetched_at": "2026-11-16T15:49:20.445Z"
  },
  "725": {
   "year": 2022,
@@ -5451,7 +5451,7 @@
    "DEODORANT",
    "HAND SANITIZER"
   ],
-  "fetched_at": "2026-11-09T12:19:59.686Z"
+  "fetched_at": "2026-11-16T15:49:35.657Z"
  },
  "736": {
   "year": 2022,
@@ -5512,7 +5512,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:35.854Z"
+  "fetched_at": "2026-11-16T15:50:10.397Z"
  },
  "744": {
   "year": 2023,
@@ -5942,7 +5942,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:20:06.420Z"
+  "fetched_at": "2026-11-16T15:49:42.218Z"
  },
  "796": {
   "year": 2023,
@@ -6011,7 +6011,7 @@
    "LIP COLOR",
    "NAIL COLOR"
   ],
-  "fetched_at": "2026-11-09T12:19:18.502Z"
+  "fetched_at": "2026-11-16T15:48:56.447Z"
  },
  "806": {
   "year": 2022,
@@ -6357,7 +6357,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:52.877Z"
+  "fetched_at": "2026-11-16T15:49:29.127Z"
  },
  "849": {
   "year": 2022,
@@ -6468,7 +6468,7 @@
    "DISHES",
    "LAUNDRY"
   ],
-  "fetched_at": "2026-11-09T12:20:22.337Z"
+  "fetched_at": "2026-11-16T15:49:57.395Z"
  },
  "863": {
   "year": 2022,
@@ -6565,7 +6565,7 @@
   "categories": [
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:02.977Z"
+  "fetched_at": "2026-11-16T15:50:36.555Z"
  },
  "875": {
   "year": 2022,
@@ -6712,7 +6712,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:30.021Z"
+  "fetched_at": "2026-11-16T15:51:02.491Z"
  },
  "893": {
   "year": 2022,
@@ -6727,7 +6727,7 @@
   "categories": [
    "NAIL COLOR"
   ],
-  "fetched_at": "2026-11-09T12:21:16.483Z"
+  "fetched_at": "2026-11-16T15:50:49.502Z"
  },
  "895": {
   "year": 2022,
@@ -7380,7 +7380,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:26.385Z"
+  "fetched_at": "2026-11-16T15:51:56.880Z"
  },
  "980": {
   "year": 2021,
@@ -7484,7 +7484,7 @@
    "HAND & BODY CARE",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:09.745Z"
+  "fetched_at": "2026-11-16T15:50:43.023Z"
  },
  "993": {
   "year": 2022,
@@ -7515,7 +7515,7 @@
    "DISHES",
    "LAUNDRY"
   ],
-  "fetched_at": "2026-11-09T12:22:01.640Z"
+  "fetched_at": "2026-11-16T15:51:33.062Z"
  },
  "997": {
   "year": 2021,
@@ -8481,7 +8481,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:20.083Z"
+  "fetched_at": "2026-11-16T15:49:55.248Z"
  },
  "1122": {
   "year": 2021,
@@ -8569,7 +8569,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:21:23.233Z"
+  "fetched_at": "2026-11-16T15:50:55.961Z"
  },
  "1133": {
   "year": 2021,
@@ -8615,7 +8615,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:50.635Z"
+  "fetched_at": "2026-11-16T15:49:26.967Z"
  },
  "1138": {
   "year": 2021,
@@ -8804,7 +8804,7 @@
   "categories": [
    "LAUNDRY"
   ],
-  "fetched_at": "2026-11-09T12:20:15.481Z"
+  "fetched_at": "2026-11-16T15:49:50.929Z"
  },
  "1166": {
   "year": 2021,
@@ -9372,7 +9372,7 @@
   "categories": [
    "MEN'S CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:20.991Z"
+  "fetched_at": "2026-11-16T15:50:53.810Z"
  },
  "1235": {
   "year": 2020,
@@ -9671,7 +9671,7 @@
   "categories": [
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:04.972Z"
+  "fetched_at": "2026-11-16T15:48:43.400Z"
  },
  "1279": {
   "year": 2021,
@@ -9717,7 +9717,7 @@
   "categories": [
    "HAND SANITIZER"
   ],
-  "fetched_at": "2026-11-09T12:20:29.084Z"
+  "fetched_at": "2026-11-16T15:50:03.906Z"
  },
  "1286": {
   "year": 2020,
@@ -10042,7 +10042,7 @@
   "categories": [
    "BODY FRAGRANCE"
   ],
-  "fetched_at": "2026-11-09T12:20:04.168Z"
+  "fetched_at": "2026-11-16T15:49:40.024Z"
  },
  "1328": {
   "year": 2020,
@@ -10154,7 +10154,7 @@
   "categories": [
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:45.866Z"
+  "fetched_at": "2026-11-16T15:51:17.692Z"
  },
  "1344": {
   "year": 2020,
@@ -10163,7 +10163,7 @@
    "FACE CARE",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:02.729Z"
+  "fetched_at": "2026-11-16T15:48:41.205Z"
  },
  "1345": {
   "year": 2021,
@@ -10310,7 +10310,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:27.763Z"
+  "fetched_at": "2026-11-16T15:51:00.327Z"
  },
  "1362": {
   "year": 2020,
@@ -10454,7 +10454,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:20:40.338Z"
+  "fetched_at": "2026-11-16T15:50:14.722Z"
  },
  "1383": {
   "year": 2020,
@@ -10603,7 +10603,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:20:01.928Z"
+  "fetched_at": "2026-11-16T15:49:37.847Z"
  },
  "1402": {
   "year": 2020,
@@ -10639,7 +10639,7 @@
   "categories": [
    "BATH & SHOWER CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:06.128Z"
+  "fetched_at": "2026-11-16T15:51:37.398Z"
  },
  "1407": {
   "year": 2020,
@@ -10942,7 +10942,7 @@
    "SPORTS/OUTDOOR",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:05.229Z"
+  "fetched_at": "2026-11-16T15:50:38.715Z"
  },
  "1447": {
   "year": 2019,
@@ -11295,7 +11295,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:31.336Z"
+  "fetched_at": "2026-11-16T15:50:06.065Z"
  },
  "1492": {
   "year": 2019,
@@ -11544,7 +11544,7 @@
    "FACE CARE",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:25.548Z"
+  "fetched_at": "2026-11-16T15:49:03.114Z"
  },
  "1524": {
   "year": 2019,
@@ -11552,7 +11552,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:18:58.202Z"
+  "fetched_at": "2026-11-16T15:48:36.820Z"
  },
  "1525": {
   "year": 2019,
@@ -11895,7 +11895,7 @@
    "MEN'S CARE",
    "SHAVING/DEPILATORY"
   ],
-  "fetched_at": "2026-11-09T12:20:56.241Z"
+  "fetched_at": "2026-11-16T15:50:30.048Z"
  },
  "1571": {
   "year": 2019,
@@ -11903,12 +11903,12 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:57.409Z"
+  "fetched_at": "2026-11-16T15:49:33.501Z"
  },
  "1572": {
   "year": 2019,
   "categories": [],
-  "fetched_at": "2026-11-09T12:19:11.758Z"
+  "fetched_at": "2026-11-16T15:48:49.916Z"
  },
  "1573": {
   "year": 2019,
@@ -12051,7 +12051,7 @@
    "MEN'S CARE",
    "SPORTS/OUTDOOR"
   ],
-  "fetched_at": "2026-11-09T12:19:09.489Z"
+  "fetched_at": "2026-11-16T15:48:47.735Z"
  },
  "1593": {
   "year": 2019,
@@ -12635,7 +12635,7 @@
   "categories": [
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:27.804Z"
+  "fetched_at": "2026-11-16T15:49:05.292Z"
  },
  "1665": {
   "year": 2019,
@@ -12710,7 +12710,7 @@
   "categories": [
    "BATH & SHOWER CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:26.822Z"
+  "fetched_at": "2026-11-16T15:50:01.744Z"
  },
  "1678": {
   "year": 2019,
@@ -12830,7 +12830,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:21:57.128Z"
+  "fetched_at": "2026-11-16T15:51:28.600Z"
  },
  "1692": {
   "year": 2019,
@@ -13159,7 +13159,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:14.241Z"
+  "fetched_at": "2026-11-16T15:50:47.351Z"
  },
  "1730": {
   "year": 2018,
@@ -13241,7 +13241,7 @@
    "BATH & SHOWER CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:15.124Z"
+  "fetched_at": "2026-11-16T15:51:46.068Z"
  },
  "1741": {
   "year": 2019,
@@ -13667,7 +13667,7 @@
    "HAIR CARE",
    "MEN'S CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:34.541Z"
+  "fetched_at": "2026-11-16T15:51:06.849Z"
  },
  "1797": {
   "year": 2018,
@@ -13741,7 +13741,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:22:24.139Z"
+  "fetched_at": "2026-11-16T15:51:54.713Z"
  },
  "1806": {
   "year": 2018,
@@ -13937,7 +13937,7 @@
   "categories": [
    "DEODORANT"
   ],
-  "fetched_at": "2026-11-09T12:20:44.955Z"
+  "fetched_at": "2026-11-16T15:50:19.258Z"
  },
  "1830": {
   "year": 2024,
@@ -13969,7 +13969,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:48.368Z"
+  "fetched_at": "2026-11-16T15:49:24.811Z"
  },
  "1834": {
   "year": 2017,
@@ -14017,7 +14017,7 @@
   "categories": [
    "BATH & SHOWER CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:39.352Z"
+  "fetched_at": "2026-11-16T15:49:16.113Z"
  },
  "1841": {
   "year": 2017,
@@ -14255,7 +14255,7 @@
   "categories": [
    "DENTAL/ORAL CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:11.993Z"
+  "fetched_at": "2026-11-16T15:50:45.189Z"
  },
  "1868": {
   "year": 2017,
@@ -14269,7 +14269,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:46.122Z"
+  "fetched_at": "2026-11-16T15:49:22.633Z"
  },
  "1870": {
   "year": 2017,
@@ -14590,7 +14590,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:19:41.610Z"
+  "fetched_at": "2026-11-16T15:49:18.285Z"
  },
  "1911": {
   "year": 2017,
@@ -15012,7 +15012,7 @@
    "HAND & BODY CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:13.237Z"
+  "fetched_at": "2026-11-16T15:49:48.774Z"
  },
  "1959": {
   "year": 2016,
@@ -15275,7 +15275,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:37.676Z"
+  "fetched_at": "2026-11-16T15:52:07.857Z"
  },
  "1990": {
   "year": 2015,
@@ -15361,7 +15361,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:22:33.141Z"
+  "fetched_at": "2026-11-16T15:52:03.432Z"
  },
  "2001": {
   "year": 2010,
@@ -15433,7 +15433,7 @@
    "MEN'S CARE",
    "SHAVING/DEPILATORY"
   ],
-  "fetched_at": "2026-11-09T12:22:39.921Z"
+  "fetched_at": "2026-11-16T15:52:10.005Z"
  },
  "2036": {
   "year": 2015,
@@ -15964,7 +15964,7 @@
    "MEN'S CARE",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:14.003Z"
+  "fetched_at": "2026-11-16T15:48:52.087Z"
  },
  "2096": {
   "year": 2014,
@@ -16891,7 +16891,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:19:16.262Z"
+  "fetched_at": "2026-11-16T15:48:54.264Z"
  },
  "2195": {
   "year": 2012,
@@ -16946,7 +16946,7 @@
   "categories": [
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:18.723Z"
+  "fetched_at": "2026-11-16T15:50:51.652Z"
  },
  "2202": {
   "year": 2012,
@@ -16982,7 +16982,7 @@
    "FACE CARE",
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:41.348Z"
+  "fetched_at": "2026-11-16T15:51:13.322Z"
  },
  "2207": {
   "year": 2015,
@@ -17069,7 +17069,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:19:07.237Z"
+  "fetched_at": "2026-11-16T15:48:45.567Z"
  },
  "2216": {
   "year": 2020,
@@ -17178,7 +17178,7 @@
   "categories": [
    "SUN CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:42.597Z"
+  "fetched_at": "2026-11-16T15:50:17.058Z"
  },
  "2228": {
   "year": 2011,
@@ -17331,7 +17331,7 @@
   "categories": [
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:51.713Z"
+  "fetched_at": "2026-11-16T15:50:25.732Z"
  },
  "2247": {
   "year": 2009,
@@ -17520,7 +17520,7 @@
   "categories": [
    "BATH & SHOWER CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:37.115Z"
+  "fetched_at": "2026-11-16T15:49:13.959Z"
  },
  "2270": {
   "year": 2000,
@@ -17583,7 +17583,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:20:58.490Z"
+  "fetched_at": "2026-11-16T15:50:32.225Z"
  },
  "2277": {
   "year": 2011,
@@ -17620,7 +17620,7 @@
   "categories": [
    "EYE CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:33.608Z"
+  "fetched_at": "2026-11-16T15:50:08.232Z"
  },
  "2281": {
   "year": 1998,
@@ -17665,7 +17665,7 @@
    "BATH & SHOWER CARE",
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:10.955Z"
+  "fetched_at": "2026-11-16T15:49:46.610Z"
  },
  "2286": {
   "year": 2001,
@@ -17774,7 +17774,7 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:20.753Z"
+  "fetched_at": "2026-11-16T15:48:58.628Z"
  },
  "2298": {
   "year": 2002,
@@ -17957,7 +17957,7 @@
   "categories": [
    "LIP COLOR"
   ],
-  "fetched_at": "2026-11-09T12:22:17.390Z"
+  "fetched_at": "2026-11-16T15:51:48.230Z"
  },
  "2344": {
   "year": 2026,
@@ -17999,7 +17999,7 @@
    "DEODORANT",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:22.998Z"
+  "fetched_at": "2026-11-16T15:49:00.934Z"
  },
  "2350": {
   "year": 2026,
@@ -18434,7 +18434,7 @@
   "categories": [
    "HAIR CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:30.049Z"
+  "fetched_at": "2026-11-16T15:49:07.462Z"
  },
  "2403": {
   "year": 2026,
@@ -18519,7 +18519,7 @@
    "BODY FRAGRANCE",
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:39.027Z"
+  "fetched_at": "2026-11-16T15:51:11.169Z"
  },
  "2413": {
   "year": 2026,
@@ -18549,7 +18549,7 @@
    "DOG",
    "CAT"
   ],
-  "fetched_at": "2026-11-09T12:20:17.720Z"
+  "fetched_at": "2026-11-16T15:49:53.087Z"
  },
  "2417": {
   "year": 2026,
@@ -18656,7 +18656,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:21:36.786Z"
+  "fetched_at": "2026-11-16T15:51:09.008Z"
  },
  "2431": {
   "year": 2026,
@@ -18813,7 +18813,7 @@
   "categories": [
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:22:03.882Z"
+  "fetched_at": "2026-11-16T15:51:35.211Z"
  },
  "2450": {
   "year": 2026,
@@ -19150,7 +19150,7 @@
    "EYE CARE",
    "FACE CARE"
   ],
-  "fetched_at": "2026-11-09T12:20:38.095Z"
+  "fetched_at": "2026-11-16T15:50:12.557Z"
  },
  "2493": {
   "year": 2019,
@@ -19225,12 +19225,12 @@
    "FACE CARE",
    "HAND & BODY CARE"
   ],
-  "fetched_at": "2026-11-09T12:19:34.556Z"
+  "fetched_at": "2026-11-16T15:49:11.801Z"
  },
  "2502": {
   "year": 2026,
   "categories": [],
-  "fetched_at": "2026-11-09T12:22:28.642Z"
+  "fetched_at": "2026-11-16T15:51:59.056Z"
  },
  "2503": {
   "year": 2023,
@@ -19407,5 +19407,79 @@
    "CAT"
   ],
   "fetched_at": "2026-11-09T16:26:47.311Z"
+ },
+ "6041": {
+  "year": null,
+  "categories": [
+   "Shampoo & Conditioner",
+   "Hair styling",
+   "HAIR CARE",
+   "SUN CARE"
+  ],
+  "fetched_at": "2026-11-16T15:48:16.772Z"
+ },
+ "6046": {
+  "year": null,
+  "categories": [
+   "CLEANERS",
+   "DISHES",
+   "LAUNDRY"
+  ],
+  "fetched_at": "2026-11-16T15:48:14.597Z"
+ },
+ "6050": {
+  "year": null,
+  "categories": [
+   "BODY FRAGRANCE"
+  ],
+  "fetched_at": "2026-11-16T15:48:18.973Z"
+ },
+ "6051": {
+  "year": null,
+  "categories": [
+   "BODY FRAGRANCE"
+  ],
+  "fetched_at": "2026-11-16T15:48:21.170Z"
+ },
+ "6052": {
+  "year": null,
+  "categories": [
+   "BODY FRAGRANCE"
+  ],
+  "fetched_at": "2026-11-16T15:48:25.498Z"
+ },
+ "6053": {
+  "year": null,
+  "categories": [
+   "BATH & SHOWER CARE",
+   "Lotion",
+   "BODY FRAGRANCE",
+   "HAND & BODY CARE",
+   "SHAVING/DEPILATORY"
+  ],
+  "fetched_at": "2026-11-16T15:48:28.052Z"
+ },
+ "6054": {
+  "year": null,
+  "categories": [
+   "BODY FRAGRANCE"
+  ],
+  "fetched_at": "2026-11-16T15:48:32.434Z"
+ },
+ "6105": {
+  "year": null,
+  "categories": [
+   "EYE COLOR",
+   "FACE",
+   "Blush",
+   "LIP COLOR",
+   "NAIL COLOR"
+  ],
+  "fetched_at": "2026-11-16T15:48:30.219Z"
+ },
+ "7162": {
+  "year": 2023,
+  "categories": [],
+  "fetched_at": "2026-11-16T15:48:23.332Z"
  }
 }
